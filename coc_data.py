@@ -11,8 +11,7 @@ def read_csv(filename):
 
             l.append(row)
             #l.append([','.join(row)])
-        #print(', '.join(row))
-        #print(l)
+
     return l
 
 def neighborhood(l):
@@ -27,8 +26,8 @@ def neighborhood(l):
         else:
             d[neighborhood].append({n:row[1:]})    
         n += 1
-            #if neighborhood not in d:
-    return d        #    d[neighborhood] = neighborhood[1:]
+
+    return d 
     #print(d)   
 
 def neighborhood_totals(l):
@@ -36,8 +35,7 @@ def neighborhood_totals(l):
     for row in l[1:]:
         if row[1] == '' and row[2] == '' and row[3] == '':
             d[row[0]] = row[4:]
-    return d        
-    print(d)        
+    return d              
 
 
 
