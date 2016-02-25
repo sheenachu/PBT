@@ -3,6 +3,7 @@ import utility
 import pprint
 import json
 
+#Get alternative fuel stations data
 
 
 url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&state=IL&zip=60601,60602,60603,60604,60605&limit=100&api_key=78WBQrMES4pXDbTB1W4To32M3R6fRLOO5W6x35n5&format=XML"
