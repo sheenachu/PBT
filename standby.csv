@@ -1,0 +1,143 @@
+Audio Minisystem,"CD, not playing",3357.6,400.8,8868.0,28
+Audio Minisystem,"Cassette, not playing",3324.0,400.8,7953.6,24
+Audio Minisystem,CD playing,4581.6,1248.0,9888.0,24
+Audio Minisystem,Off,1996.8,72.0,5899.2,27
+Audio Minisystem,Radio playing,3458.4,715.2,9120.0,28
+DVD Player,"On, not playing",1809.6,57.6,3048.0,33
+DVD Player,"On, playing",2378.4,1267.2,4120.8,33
+DVD Player,Off,372.0,0.0,2539.2,33
+"Modem, DSL",Off,328.8,79.2,484.8,16
+"Modem, DSL",On,1288.8,811.2,1972.8,20
+"Charger, mobile phone","On, charged",537.6,180.0,986.4,4
+"Charger, mobile phone","On, charging",883.2,64.8,1800.0,23
+"Charger, mobile phone",Power supply only,62.4,4.8,240.0,32
+Coffee Maker,Off,273.6,0.0,648.0,12
+CD Player,"On, not playing",2068.8,960.0,6168.0,7
+CD Player,"On, playing",2378.4,1392.0,6144.0,7
+CD Player,Off,1209.6,480.0,4416.0,7
+"Computer, desktop","On, idle",17752.8,6600.0,43399.2,63
+"Computer, desktop",Off,681.6,0.0,2210.4,64
+"Computer, desktop",Sleep,5071.2,264.0,19992.0,52
+Game Console,Active,6475.2,1296.0,16243.2,24
+Game Console,Off,242.4,0.0,511.2,26
+Game Console,Ready,5601.6,508.8,15297.6,24
+Cassette Deck,"On, not playing",1087.2,1046.4,1128.0,2
+Cassette Deck,"On, playing",1372.8,1248.0,1500.0,2
+Cassette Deck,Off,129.6,0.0,259.2,2
+Turntable (audio),"On, not playing",1442.4,412.8,3072.0,3
+Turntable (audio),Off,48.0,0.0,144.0,3
+Clock,On,417.6,237.6,866.4,21
+Clock,Radio playing,708.0,408.0,1008.0,2
+"Television, CRT",Off by remote,734.4,72.0,2481.6,38
+"Television, CRT",Off by switch,691.2,0.0,3864.0,58
+"Range, gas",Ready,271.2,168.0,408.0,4
+Receiver (audio),"On, not playing",9026.4,4104.0,15648.0,18
+Receiver (audio),Off,700.8,0.0,4728.0,18
+"Set-top Box, satellite","On, TV off",3828.0,1845.6,7968.0,33
+"Set-top Box, satellite","On, TV on",3876.0,1845.6,7968.0,33
+"Set-top Box, satellite",Off by remote,3758.4,1579.2,7932.0,25
+"Set-top Box, satellite",Off by switch,3712.8,1579.2,7848.0,31
+"Timer, irrigation",Off,660.0,360.0,1416.0,14
+"Timer, irrigation",Ready,681.6,360.0,1416.0,16
+Subwoofer,"On, not playing",2568.0,1392.0,4944.0,7
+Subwoofer,"On, playing",2980.8,1416.0,4944.0,6
+"Computer, notebook","Fully on, charged",7075.2,3588.0,17544.0,13
+"Computer, notebook","Fully on, charging",10627.2,6571.2,16056.0,8
+"Computer, notebook",Off,2136.0,112.8,12000.0,19
+"Computer, notebook",Power supply only,1060.8,36.0,6336.0,19
+"Computer, notebook",Sleep,3784.8,196.8,13152.0,16
+"Power Tool, cordless","Ready, charged",2001.6,436.8,3360.0,5
+"Power Tool, cordless",Active,7087.2,333.6,15840.0,16
+"Power Tool, cordless",Ready,417.6,0.0,1128.0,23
+"Modem, cable",Off,921.6,376.8,1588.8,8
+"Modem, cable",On,1500.0,873.6,2068.8,16
+"Modem, cable",Standby,924.0,861.6,986.4,2
+VCR,"On, not playing",1864.8,912.0,2788.8,14
+VCR,Off,1123.37,288.0,2376.0,14
+"Air Conditioner, room/wall",Off,216.0,216.0,216.0,1
+"Security Systems, home",Ready,648.0,648.0,648.0,1
+"Scanner, flatbed",Off,595.2,64.8,1968.0,6
+"Scanner, flatbed",On,2304.0,410.4,3744.0,10
+"Set-top Box, satellite with DVR","Not recording, TV off",6804.0,6192.0,7416.0,2
+"Set-top Box, satellite with DVR","Not recording, TV on",7528.8,5808.0,8712.0,3
+"Set-top Box, satellite with DVR",Off by remote,6672.0,5280.0,8064.0,2
+"Hub, USB",Off,345.6,228.0,434.4,5
+"Hub, USB",On,494.4,254.4,852.0,7
+"Printer, laser",Off,379.2,0.0,1080.0,7
+"Printer, laser",On,31456.8,408.0,115656.0,5
+Low-voltage Landscape,Ready,271.2,264.0,280.8,2
+"Fax, inkjet",Off,1274.4,0.0,2092.8,3
+"Fax, inkjet",On,1492.8,693.6,3360.0,8
+Microwave Ovens,"Ready, door closed",739.2,336.0,1176.0,18
+Microwave Ovens,"Ready, door open",6189.6,384.0,9360.0,17
+Microwave Ovens,Cooking,343920.0,231888.0,413520.0,18
+"Set-top Box, digital cable with DVR","Not recording, TV off",10711.2,10651.2,10768.8,2
+"Set-top Box, digital cable with DVR","Not recording, TV on",10656.0,10608.0,10704.0,2
+"Set-top Box, digital cable with DVR",Off by remote,10430.4,10392.0,10466.4,2
+"Computer Display, CRT",Off,192.0,0.0,717.6,21
+"Computer Display, CRT",On,15624.0,8289.6,29947.2,21
+"Computer Display, CRT",Sleep,2913.6,384.0,17880.0,14
+"Set-top Box, DVR","On, no recording",9033.6,6228.0,11808.0,4
+"Set-top Box, DVR","On, recording",7029.6,6544.8,7512.0,2
+"Set-top Box, DVR",Off,8803.2,5592.0,11664.0,4
+"Heating, furnace central",Off,1010.4,0.0,2352.0,16
+"Heating, furnace central",On,81530.4,16920.0,191040.0,14
+Surge Protector,Off,252.0,0.0,1512.0,6
+Surge Protector,On,192.0,0.0,1660.8,43
+"Computer Display, LCD",Off,271.2,74.4,840.0,32
+"Computer Display, LCD",On,6626.4,456.0,13315.2,31
+"Computer Display, LCD",Sleep,331.2,88.8,1872.0,30
+"Speakers, computer","On, no sound",988.8,165.6,2361.6,21
+"Speakers, computer",Off,429.6,0.0,1344.0,19
+"Printer, inkjet",Off,302.4,0.0,960.0,25
+"Printer, inkjet",On,1183.2,434.4,5280.0,25
+Telephone Answering Device,Off,482.4,314.4,612.0,7
+Telephone Answering Device,Ready,540.0,340.8,679.2,7
+Amplifier,"On, not playing",8157.6,5136.0,17023.2,6
+Amplifier,"On, playing",9398.4,5066.4,16632.0,6
+Amplifier,Off,64.8,0.0,432.0,7
+Musical Instruments,Off,676.8,288.0,1008.0,9
+Caller ID Unit,Ready,304.8,304.8,304.8,1
+"Night Light, interior",Off,12.0,0.0,81.6,10
+"Night Light, interior",On,1072.8,0.0,6712.8,19
+"Night Light, interior",Ready,52.8,0.0,288.0,8
+"Stereo, portable","CD, not playing",986.4,309.6,1639.2,15
+"Stereo, portable","Cassette, not playing",580.8,278.4,1420.8,13
+"Stereo, portable",CD playing,1632.0,950.4,2208.0,15
+"Stereo, portable",Off,398.4,168.0,1305.6,19
+"Stereo, portable",Radio playing,792.0,326.4,1980.0,20
+"Phone, cordless with answering machine","Ready, handset",960.0,516.0,1776.0,20
+"Phone, cordless with answering machine","Ready, no handset",676.8,412.8,1128.0,20
+"Phone, cordless with answering machine",Active (talking),847.2,528.0,1560.0,21
+"Phone, cordless with answering machine",Off,700.8,216.0,1776.0,11
+DVD Recorder,Off,180.0,0.0,360.0,2
+"Set-top Box, digital cable","On, TV off",5916.0,3408.0,17937.6,18
+"Set-top Box, digital cable","On, TV on",7113.6,3384.0,24535.2,18
+"Set-top Box, digital cable",Off by remote,4279.2,3177.6,7344.0,14
+"Set-top Box, digital cable",Off by switch,4200.0,3288.0,6312.0,16
+Garage Door Opener,Ready,1075.2,432.0,1752.0,34
+"Phone, cordless","Ready, handset",674.4,252.0,1173.6,35
+"Phone, cordless","Ready, no handset",379.2,141.6,741.6,35
+"Phone, cordless",Active (talking),456.0,141.6,811.2,33
+"Phone, cordless",Off,235.2,129.6,432.0,10
+"Clock, radio",On,482.4,232.8,1824.0,23
+"Multi-function Device, inkjet",Off,1262.4,0.0,2407.2,23
+"Multi-function Device, inkjet",On,2198.4,936.0,4248.0,24
+Television/VCR,Off by remote,1236.0,516.0,3192.0,6
+Television/VCR,Off by switch,1437.6,516.0,3146.4,7
+"Fax, laser",Off,0.0,0.0,0.0,1
+"Fax, laser",On,1464.0,1464.0,1464.0,1
+"Fax, laser",Ready,1540.8,1540.8,1540.8,1
+"Television, rear projection",On,44661.6,44661.6,44661.6,1
+"Television, rear projection",Off by remote,1672.8,48.0,11640.0,16
+"Television, rear projection",Off by switch,1584.0,48.0,11640.0,15
+DVD/VCR,"On, not playing",3242.4,2035.2,4920.0,21
+DVD/VCR,"On, playing",3679.2,2263.2,5368.8,19
+DVD/VCR,Off,1209.6,21.6,3048.0,21
+Copier,Off,357.6,0.0,712.8,2
+Copier,On,2311.2,864.0,3360.0,3
+"Multi-function Device, laser",Off,748.8,0.0,1128.0,3
+"Multi-function Device, laser",On,11923.2,1200.0,42000.0,4
+"Tuner, AM/FM","On, not playing",2275.2,1219.2,3936.0,3
+"Tuner, AM/FM","On, playing",2380.8,1216.8,4248.0,3
+"Tuner, AM/FM",Off,268.8,0.0,808.8,3
