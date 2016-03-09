@@ -9,20 +9,23 @@ import quicksort
 
 l_elec = coc_data.read_csv("Energy_Usage_2010_elec.csv")
 gas = coc_data.read_csv("Energy_Usage_2010_therms.csv")
+month_dict = {"jan":1, "feb":2, "mar":3, "apr":4, "may":5,
+"jun":6,"jul":7,"aug":8,"sep":9,"oct":10,"nov":11,"dec":12,"tot":13}
 
-def determine_ranking(l):
+def determine_ranking(l,month):
     ranking_list = []
     d = coc_data.neighborhood_totals(l)
 
     for key in d.keys():
         #Normalize by population
-        x = {float(d[key][17])/float(d[key][-10]):key}
+
+        x = {float(d[key][month_dict[month]+4])/float(d[key][-10]):key}
         ranking_list.append(x)
     #print(ranking_list)
     return ranking_list   
 
-def sort(filename):
-    neighborhoods = determine_ranking(filename)
+def sort(filename,month):
+    neighborhoods = determine_ranking(filename,month)
     l=[]
     for neighborhood in neighborhoods:
         for key in neighborhood.keys():
@@ -43,8 +46,8 @@ def sort(filename):
     return rv
 
 if __name__=="__main__":
-    ans = sort(l_elec)
-    ans2 = sort(gas)
+    ans = sort(l_elec,"tot")
+    ans2 = sort(gas,"tot")
 
     print(ans)
     print(ans2)
