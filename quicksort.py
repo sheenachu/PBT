@@ -2,14 +2,19 @@
 #
 #Created by Kevin Bernat 3/8/2016
 #Modified from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
+# Median of Three method was implemented independently, using the following
+# as a reference: http://stackoverflow.com/questions/24533359/implementing-the-quick-sort-with-median-of-three
 
 import statistics
 from random import randint
 
 
 def median_of_three(first,middle,last):
+    """
+    Takes the first element, last element and middle element of a list
+    and returns the median value
+    """
 
-    #median_value = statistics.median([l[0],l[int(len(l)/2)],l[-1]])
     median_value = statistics.median([first,middle,last])
     return median_value
 
@@ -47,10 +52,18 @@ def new_partition(l,left_index,right_index,current_left,current_right):
     split is done, it continues swapping between indices that are out
     of order.
     """
-
+    #start off with the pivot as the first element of the list
     pivot = l[left_index]   
 
-    current_left = left_index + 1
+    if current_left >= current_right:
+        #get new pivot
+        middle = int(len(l[left_index:right_index])/2)
+    
+        pivot = median_of_three(l[current_left],l[middle],l[current_right])
+        #need to swap the pivot to the beginning of the partitioned list
+        swap(l,l.index(pivot),left_index)
+
+    current_left = left_index
     current_right = right_index
 
     while current_left <= current_right and l[current_left] <= pivot: 
@@ -77,26 +90,3 @@ if __name__=="__main__":
     x = quick_sort(l,0,len(l)-1)
     print(x)
 
-    #random = randint(0,right_index)
-    #pivot = l[random]
-    #print(l[current_left:current_right])
-
-    #if current_left >= current_right:
-        #get new pivot
-
-
-    #    if len(l[current_left:current_right])%2 ==0:
-    #        middle = int(len(l[current_left:current_right])/2)
-    #    else:
-    #        middle = int(len(l[current_left:current_right])/2)
-
-    
-    #print(l[current_left],l[middle],l[current_right])
-    
-        #pivot = median_of_three(l[current_left],l[middle],l[current_right])
-    
-    #print("full list ",l)
-
-        #swap(l,l.index(pivot),current_left)
-    #print(pivot)
-    #pivot = l[current_left] 
