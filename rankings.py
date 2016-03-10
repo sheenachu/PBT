@@ -1,4 +1,4 @@
-#Purpose: Determine the ranking of the different neighborhoods
+# Purpose: Determine the ranking of the different neighborhoods
 # in Chicago
 #
 # Created by Kevin Bernat
@@ -13,6 +13,11 @@ month_dict = {"jan":1, "feb":2, "mar":3, "apr":4, "may":5,
 "jun":6,"jul":7,"aug":8,"sep":9,"oct":10,"nov":11,"dec":12,"tot":13}
 
 def determine_ranking(l,month):
+    """
+    Gets the neighborhood data from the City of Chicago.
+    Creates a dictionary with the khw or therms as keys and the neighborhoods
+    as values.
+    """
     ranking_list = []
     d = coc_data.neighborhood_totals(l)
 
@@ -25,21 +30,22 @@ def determine_ranking(l,month):
     return ranking_list   
 
 def sort(filename,month):
+    """
+    Given a csv file of interest and a month, this ranks the neighborhoods
+    based on their electricity and gas consumption.
+    """
     neighborhoods = determine_ranking(filename,month)
     l=[]
     for neighborhood in neighborhoods:
         for key in neighborhood.keys():
             l.append(round(key,10))
-    #print(l)
+
     sorted_values = quicksort.quick_sort(l,0,len(l)-1)
     rv = []
     for value in sorted_values:
-    #    print("value ",value)
         for neighborhood in neighborhoods:
             for key in neighborhood.keys():
-    #            print("key ", key)
                 if value == round(key,10):
-    #                print('got here')
                     rv.append(neighborhood[key])
     #print(len(sorted_values))                
     #print(len(rv))

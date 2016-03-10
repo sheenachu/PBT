@@ -2,6 +2,9 @@ import csv
 #l = []
 
 def read_csv(filename):
+    """
+    Reads a csv file and stores the information into a list.
+    """
     l = []
     with open(filename, newline='') as csvfile:
 
@@ -14,6 +17,9 @@ def read_csv(filename):
     return l
 
 def neighborhood(l):
+    """
+    Ignore this function...but might need for something else.
+    """
     d = {}
     n = 0
     for row in l[1:]:
@@ -30,6 +36,11 @@ def neighborhood(l):
     #print(d)   
 
 def neighborhood_totals(l):
+    """
+    Loops through the list of buildings and finds the items that
+    correspond to neighborhood totals and stores this information
+    into a dictionary.
+    """
     d = {}
     for row in l[1:]:
         if row[1] == '' and row[2] == '' and row[3] == '':
