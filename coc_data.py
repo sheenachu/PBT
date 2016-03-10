@@ -34,7 +34,9 @@ def neighborhood_totals(l):
     for row in l[1:]:
         if row[1] == '' and row[2] == '' and row[3] == '':
             d[row[0]] = row[4:]
-    return d              
+    return d               
+
+
 
 
 
