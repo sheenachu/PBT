@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 <html>
-
 <head>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
 		<style>
@@ -38,22 +37,23 @@
 			}
 		</style>
 		<style type="text/css"></style>
-<style type="text/css"></style>
-</head>
+<style type="text/css"></style></head>
 <body>
-	<div id="map" style="width: 1250px; height: 600px; position: relative;" ></div>
+	<div id="map" style="width: 100%; height: 100%; position: relative;" ></div>
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-	<script src="{{ STATIC_URL }}maptest1.js"></script>
+	<script type="text/javascript" src={% static "community-areas.js" %}></script>
 	<script type="text/javascript">
 
 		var map = L.map('map').setView([41.88, -87.62], 10);
 
-		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXN0ZWxsZW8iLCJhIjoiY2lsbGtjcnloNXRxZnVoa3Brb3B4Z25pcSJ9.ivjRcsVM9CnL1oWlCC1LSQ', {
+		var base = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXN0ZWxsZW8iLCJhIjoiY2lsbGtjcnloNXRxZnVoa3Brb3B4Z25pcSJ9.ivjRcsVM9CnL1oWlCC1LSQ', {
 			maxZoom: 18,
 			id: 'estelleo.pc8hminh'
 		}).addTo(map);
 
 
+		var electricity = L.layerGroup(),
+			gas = L.layerGroup();
 
 		// control that shows state info on hover
 		var info = L.control();
@@ -65,9 +65,8 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h4>Energy Effiency by Neighborhood</h4>' +  (props ?
-				'<b>' + props.community + '</b><br />' + '# ' + props.elec_rank + ' in electricity usage'
-				: 'Hover over a neighborhood');
+			this._div.innerHTML = "<h4>ChicaGoin' Green</h4>" +  (props ?
+				'<b>' + props.community : 'Hover over a neighborhood');
 		};
 
 		info.addTo(map);
@@ -75,17 +74,17 @@
 
 		// get color depending on population density value
 		function getColor(d) {
-			return d < 10 ? '#800026' :
-			       d < 20  ? '#BD0026' :
-			       d < 30  ? '#E31A1C' :
-			       d < 40  ? '#FC4E2A' :
-			       d < 50   ? '#FD8D3C' :
-			       d < 60   ? '#FEB24C' :
-			       d < 70   ? '#FED976' :
-			                  '#FFEDA0';
+			return d < 10   ? '#0f1a04' :
+			       d < 20   ? '#253D0B' :
+			       d < 30   ? '#4d7f17' :
+			       d < 40   ? '#6bb120' :
+			       d < 50   ? '#8ae429' :
+			       d < 60   ? '#9afe2e' :
+			       d < 70   ? '#aefe57' :
+			                  '#c6fe89';
 		}
 
-		function style(feature) {
+		function style1(feature) {
 			return {
 				weight: 2,
 				opacity: 1,
@@ -95,6 +94,18 @@
 				fillColor: getColor(feature.properties.elec_rank)
 			};
 		}
+
+		function style2(feature) {
+			return {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: getColor(feature.properties.gas_rank)
+			};
+		}
+
 
 		function highlightFeature(e) {
 			var layer = e.target;
@@ -124,18 +135,53 @@
 			map.fitBounds(e.target.getBounds());
 		}
 
-		function onEachFeature(feature, layer) {
+		var popup = L.popup();
+
+		function eRank(e) {
+			var layer = e.target;			
+		    popup
+		        .setLatLng(e.latlng)
+		        .setContent('<b>' + layer.feature.properties.community + '</b><br />' + "#" + layer.feature.properties.elec_rank + " Greenest (Electricity)")
+		        .openOn(map);
+		}
+
+		function gRank(e) {
+			var layer = e.target;			
+		    popup
+		        .setLatLng(e.latlng)
+		        .setContent('<b>' + layer.feature.properties.community + '</b><br />' + "#" + layer.feature.properties.gas_rank + " Greenest (Gas)")
+		        .openOn(map);
+		}
+
+		function onEachFeature1(feature, layer) {
 			layer.on({
 				mouseover: highlightFeature,
 				mouseout: resetHighlight,
-				click: zoomToFeature
+				click: eRank
 			});
 		}
 
+		function onEachFeature2(feature, layer) {
+			layer.on({
+				mouseover: highlightFeature,
+				mouseout: resetHighlight,
+				click: gRank
+			});
+		}
+
+
 		geojson = L.geoJson(neighborhoodData, {
-			style: style,
-			onEachFeature: onEachFeature
-		}).addTo(map);
+			style: style1,
+			onEachFeature: onEachFeature1
+		});
+
+		geojson2 = L.geoJson(neighborhoodData, {
+			style: style2,
+			onEachFeature: onEachFeature2
+		});
+
+		electricity.addLayer(geojson)
+		gas.addLayer(geojson2)
 
 
 		var legend = L.control({position: 'bottomright'});
@@ -162,9 +208,21 @@
 
 		legend.addTo(map);
 
+		var baseMaps = {
+		    "Electricity": electricity,
+		    "Gas": gas
+		};
+
+		var overlayMaps = {
+		    "Electricity": electricity,
+		    "Gas": gas
+		};
+		
+		var layers = L.control.layers(baseMaps)
+
+		layers.addTo(map);
+
+
 	</script>
-
-
 </body>
-
 </html>
