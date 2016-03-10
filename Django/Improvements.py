@@ -14,12 +14,16 @@ DATA_DIR = os.path.dirname(__file__)
 DATABASE_FILENAME = os.path.join(DATA_DIR, 'improvements.db')
 
 ATTRIBUTES = ["device", "hours_a_day", "btu_per_hour",
-            "therms_saved_per_month", "money_saved_per_month"]
+           "therms_saved_per_month", "money_saved_per_month"]
 
 PARAMS_ATTRS = {"device" : ["money_saved_per_month"],
-                "hours_a_day" : ["money_saved_per_month"],}
+                "hours_a_day" : ["money_saved_per_month"]}
 
-SCHEMA = {"device" : "hours_a_day": "btu_per_hour": "therms_saved_per_month", "money_saved_per_month"}
+SCHEMA = {"device" : "device", "hours_a_day": "hours_a_day",
+    "btu_per_hour": "btu_per_hour", "therms_saved_per_month": "therms_saved_per_month",
+    "money_saved_per_month": "money_saved_per_month"}
+
+
 
 def select_list(query):
     '''
@@ -29,8 +33,10 @@ def select_list(query):
         query: dictionary
     
     Returns:
-        list of strings
+        string
     '''
+
+    gas_price = 0.2808
     attr = []
     rv = []
     for key in query:
@@ -83,42 +89,17 @@ def where_list(query):
     '''
     wheres = []
     args = []
-
     for key in query:
-        boo = "="
-        if key == "day":
-            rd = []
-            for d in query[key]:
-                rd.append('{} {} ?'.format(SCHEMA[key], boo))
-                args.append(d)
-            rd = ' OR '.join(rd)
-            wheres.append('({})'.format(rd))
-            continue
-        if key == "building":
-            wheres.append("b.building_code = ?")
-            args.append(query[key])
-            continue
 
-        if key == "walking_time":
-            dist_string = "walking_time <= ?"
-            wheres.append(dist_string)
+        if key == "device":
+            wheres.append("device = ?")
             args.append(query[key])
-            continue        
-        if key == "terms":
-            list_terms = []
-            list_terms = query[key].split()
-            rd = []
-            for t in list_terms:
-                rd.append('{} {} ?'.format(SCHEMA[key], boo))
-                args.append(t)
-            rd = ' OR '.join(rd)
-            wheres.append('({})'.format(rd))
             continue
-        if key in ["time_start", "enroll_lower"]:
-            boo = ">="
-        if key in ["time_end", "enroll_upper"]:
-            boo = "<="
-        wheres.append('{} {} ?'.format(SCHEMA[key], boo))
+        if key == 'hours_a_day':
+            wheres.append("hours_a_day = ?")
+            args.append(query[key])
+            continue
+    
         args.append(str(query[key]))
 
     return wheres, args
@@ -141,25 +122,9 @@ def sql_string(query, s_list, w_list):
     w_string = " AND ".join(w_list)
 
     string = "SELECT {}\
-        FROM courses AS c \
-        JOIN sections AS s ON c.course_id = s.course_id \
-        JOIN meeting_patterns AS mp ON s.meeting_pattern_id = \
-        mp.meeting_pattern_id".format(s_string)
+        FROM gas_improvements".format(s_string)
         
-
-    if "walking_time" in query.keys():
-        string += " JOIN gps AS a ON a.building_code = s.building_code \
-                    JOIN gps AS b"
-    if "terms" in query.keys():
-        list_terms = []
-        list_terms = query['terms'].split()
-        group_string = "GROUP BY c.course_num, s.section_num HAVING count(*) = "  + str(len(list_terms))
-
-        string += " JOIN catalog_index AS ci ON c.course_id = ci.course_id"
-        string += " WHERE {} {}".format(w_string, 
-                    group_string)
-    else:
-        string += " WHERE {}".format(w_string)
+    string += " WHERE {}".format(w_string)
     
     return string
 
@@ -185,7 +150,6 @@ def db_query(database, query):
 
     args_string = ", ".format(args)
 
-    db.create_function("time_between", 4, compute_time_between)
     r = c.execute(string, args)
 
     result = r.fetchall()
@@ -194,7 +158,7 @@ def db_query(database, query):
 
     return result
 
-def find_courses(args_from_ui):
+def money_saved(args_from_ui):
     '''
     Takes a dictionary containing search criteria and returns courses
     that match the criteria.  The dictionary will contain some of the
@@ -245,7 +209,7 @@ def clean_header(s):
 
     return s
 
-########### some sample inputs #################
+# ########### some sample inputs #################
 
-example_0 = {"Device": "Bathtub",
-             "Reduced Hours": 8}
+example_1 = {"device": "Fireplace",
+             "hours_a_day": 0.16666}

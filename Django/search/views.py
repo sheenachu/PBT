@@ -12,19 +12,18 @@ import sys
 import csv
 import os
 from operator import and_
-from courses import find_courses
+from Improvements import money_saved
 from functools import reduce
 
 NOPREF_STR = 'No preference'
 RES_DIR = os.path.join(os.path.dirname(__file__), '..', 'res')
 COLUMN_NAMES = dict(
-        dev='Device',
-        day='Day',
+        device='device',
+        hours_a_day='Hours Reduced',
 )
 
 
 def _valid_result(res):
-    """Validates results returned by find_courses"""
     (HEADER, RESULTS) = [0,1]
     ok = (isinstance(res, (tuple, list)) and 
           len(res) == 2 and
@@ -54,16 +53,20 @@ def _build_dropdown(options):
     """Converts a list to (value, caption) tuples"""
     return [(x, x) if x is not None else ('', NOPREF_STR) for x in options]
 
-DAYS = _build_dropdown(_load_res_column('day_list.csv'))
+#DAYS = _build_dropdown(_load_res_column('day_list.csv'))
 DEVICE = _build_dropdown([None] + _load_res_column('device.csv'))
 
 class SearchForm(forms.Form):
 
-    dev = forms.ChoiceField(label='Device', choices=DEVICE, required=False)
-    days = forms.MultipleChoiceField(label='Days',
-                                     choices=DAYS,
-                                     widget=forms.CheckboxSelectMultiple,
-                                     required=False)
+    device = forms.ChoiceField(label='device', choices=DEVICE, required=False)
+    # days = forms.MultipleChoiceField(label='Days',
+    #                                  choices=DAYS,
+    #                                  widget=forms.CheckboxSelectMultiple,
+    #                                  required=False)
+    hours_a_day = forms.CharField(
+        label='Hours Reduced Per Day',
+        #help_text='HALP MEH',
+        required=False)
 
 def improve(request):
     context = {}
@@ -76,28 +79,20 @@ def improve(request):
 
             # Convert form data to an args dictionary for find_courses
             args = {}
-            # if form.cleaned_data['query']:
-            #     args['terms'] = form.cleaned_data['query']
-            days = form.cleaned_data['days']
-            if days:
-                args['day'] = days
-            dev = form.cleaned_data['device']
-            if dev:
-                args['dev'] = dev
+            if form.cleaned_data['hours_a_day']:
+                args['hours_a_day'] = form.cleaned_data['hours_a_day']
+            device = form.cleaned_data['device']
+            if device:
+                args['device'] = device
 
             # if form.cleaned_data['show_args']:
             #     context['args'] = 'args_to_ui = ' + json.dumps(args, indent=2)
 
             try:
-                res = find_courses(args)
+                res = money_saved(args)
             except Exception as e:
-                print('Exception caught')
+                # print('Exception caught')
                 bt = traceback.format_exception(*sys.exc_info()[:3])
-                context['err'] = """
-                An exception was thrown in find_courses:
-                <pre>{}
-{}</pre>
-                """.format(e, '\n'.join(bt))
 
                 res = None
     else:
@@ -118,12 +113,13 @@ def improve(request):
     else:
         columns, result = res
 
+        context['result'] = result
         # Wrap in tuple if result is not already
         if result and isinstance(result[0], str):
             result = [(r,) for r in result]
 
         context['result'] = result
-        context['num_results'] = len(result)
+        #context['num_results'] = len(result)
         context['columns'] = [COLUMN_NAMES.get(col, col) for col in columns]
 
     context['form'] = form
@@ -131,3 +127,6 @@ def improve(request):
 
 def home(request):
     return render(request, 'search/index.html', {})
+
+def about(request):
+    return render(request, 'search/about.html', {})
