@@ -29,8 +29,8 @@
 
         <div class="frame">
             {% if result != None %}
-            <div class="results">
-                <table class="courses">
+            <div>
+                <table>
                     <tr>
                         {% for col in columns %}
                         <th>{{ col }}</th>
@@ -45,7 +45,6 @@
                     {% endfor %}
                 </table>
             </div>
-            <p class="num_results">Results: {{ num_results }}</p>
             {% endif %}
         </div>
     </body>
