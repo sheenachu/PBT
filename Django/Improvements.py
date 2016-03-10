@@ -122,7 +122,7 @@ def sql_string(query, s_list, w_list):
     w_string = " AND ".join(w_list)
 
     string = "SELECT {}\
-        FROM gas_improvements".format(s_string)
+        FROM updated_gas_improvements_final".format(s_string)
         
     string += " WHERE {}".format(w_string)
     
