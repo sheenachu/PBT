@@ -1,0 +1,222 @@
+
+body {background-image: url("background.jpg"); background-size: cover; background-attachment: fixed; background-position: center;}
+div {background: rgba(255, 255, 255, 0.85); position: center; margin:100px 200px 0px 200px; padding: 20px 20px 20px 20px; }
+
+/* start modified code from http://www.w3schools.com/css/css_navbar.asp */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+
+/* end modified code */
+
+
+h1 a {
+    color: #1FFF7B;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+body {
+    padding-left: 15px;
+}
+
+
+.page-header {
+    background-color: #005E20;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 48pt;
+    text-decoration: none;
+}
+
+.content {
+    margin-left: 40px;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Cabin Sketch', cursive;
+}
+
+.date {
+    color: #828282;
+}
+
+.save {
+    float: right;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
+
+.post {
+    margin-bottom: 70px;
+}
+
+.post h1 a, .post h1 a:visited {
+    color: #000000;
+}
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana;
+}
+
+div#header {
+    background: #005E20;
+    margin: 0;
+    padding: 0;
+}
+
+div#header h1 {
+    font-size: 18px;
+    color: #f5f5f5;
+    margin: 0;
+    padding: 7px;
+}
+
+div.frame {
+    margin: 15px;
+}
+
+div.args {
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffe;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+div.error {
+    padding: 15px;
+    background: #eee;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+fieldset {
+    padding: 3px;
+    margin: 1px;
+    border: 1px solid #ddd;
+}
+
+fieldset legend {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+input.query {
+    font-size: 18px;
+}
+
+label {
+    font-size: 12px;
+}
+
+p.num_results {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+table.form {
+    text-align: left;
+}
+
+table.form tr td,
+table.form tr th {
+    vertical-align: top;
+}
+
+table.form input {
+    margin-right: 5px;
+}
+
+table.form input#id_query {
+    font-size: 18px;
+}
+
+table.form ul#id_days {
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+}
+
+table.form ul#id_days li {
+    display: block;
+    float: left;
+    margin: 0px;
+    padding: 0px;
+}
+
+table.courses {
+    border: 1px solid #ddd;
+    padding: 0px;
+    margin: 0px;
+}
+
+table.courses tr th {
+    text-align: left;
+}
+
+table.courses tr td,
+table.courses tr th {
+    padding: 3px;
+    font-size: 12px;
+}
+
+table.courses tr:nth-child(even) {
+    background: #eee;
+}
+
+ul.errorlist {
+    margin: 0px;
+    padding: 0px;
+    padding-top: 5px;
+
+}
+
+ul.errorlist li {
+    font-size: 12px;
+    color: red;
+    margin: 0px;
+    padding: 0px;
+}
+
+span.helptext {
+    font-size: 11px;
+    color: gray;
+}

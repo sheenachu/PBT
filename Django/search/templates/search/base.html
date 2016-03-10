@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'search.css' %}">
+        <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
+
+
+        <title>ChicaGoin' Green</title>
+    </head>
+    <body>
+
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="improve">Improvements</a></li>
+          <li style="float:right"><a href="About">About</a></li>
+        </ul>
+
+        <div class="page-header">
+            <h1><a href="/">ChicaGoin' Green</a></h1>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+    </body>
+</html>
