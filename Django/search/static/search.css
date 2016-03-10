@@ -56,6 +56,7 @@ body {
 
 .content {
     margin-left: 40px;
+    font-size:18pt ;
 }
 
 h1, h2, h3, h4 {
@@ -103,7 +104,7 @@ div#header {
 }
 
 div#header h1 {
-    font-size: 18px;
+    font-size: 48px;
     color: #f5f5f5;
     margin: 0;
     padding: 7px;
@@ -119,6 +120,7 @@ div.args {
     background: #ffe;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+    font-size: 24pt;
 }
 
 div.error {
@@ -140,15 +142,10 @@ fieldset legend {
 }
 
 input.query {
-    font-size: 18px;
+    font-size: 24px;
 }
 
 label {
-    font-size: 12px;
-}
-
-p.num_results {
-    margin-left: 5px;
     font-size: 12px;
 }
 
