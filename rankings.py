@@ -9,24 +9,34 @@ import quicksort
 
 l_elec = coc_data.read_csv("Energy_Usage_2010_elec.csv")
 gas = coc_data.read_csv("Energy_Usage_2010_therms.csv")
-month_dict = {"jan":1, "feb":2, "mar":3, "apr":4, "may":5,
-"jun":6,"jul":7,"aug":8,"sep":9,"oct":10,"nov":11,"dec":12,"tot":13}
+month_dict = {"jan":0, "feb":1, "mar":2, "apr":3, "may":4,
+"jun":5,"jul":6,"aug":7,"sep":8,"oct":9,"nov":10,"dec":11,"tot":12}
 
 def determine_ranking(l,month):
     """
     Gets the neighborhood data from the City of Chicago.
     Creates a dictionary with the khw or therms as keys and the neighborhoods
     as values.
+
+    Input:
+    l = list of data
+    month = three letter lowercase value of month (e.g. "jan" or 
+        can use "tot" for total in a year)
     """
     ranking_list = []
     d = coc_data.neighborhood_totals(l)
 
     for key in d.keys():
         #Normalize by population
+        #print(l)
+        if l == gas:
+            total_pop_column = 14
+        if l == l_elec:
+            total_pop_column = 15    
 
-        x = {float(d[key][month_dict[month]+4])/float(d[key][-10]):key}
+        x = {float(d[key][month_dict[month]])/float(d[key][total_pop_column]):key}
         ranking_list.append(x)
-    #print(ranking_list)
+    print(ranking_list)
     return ranking_list   
 
 def sort(filename,month):
@@ -51,9 +61,56 @@ def sort(filename,month):
     #print(len(rv))
     return rv
 
+def determine_census_ranking(l,month):
+
+    ranking_list = []
+    d = coc_data.census_block_data(l, "Energy_Usage_2010_elec.csv")
+
+    for key in d.keys():
+        
+        #Normalize by population
+        #print(l)
+        if l == gas:
+            total_pop_column = 13
+        if l == l_elec:
+            total_pop_column = 13    
+            
+        x = {float(d[key][month_dict[month]])/float(d[key][total_pop_column]):key}
+        ranking_list.append(x)
+    print(ranking_list)
+    return ranking_list   
+
+def sort_census(filename,month):
+    """
+    Given a csv file of interest and a month, this ranks the neighborhoods
+    based on their electricity and gas consumption.
+    """
+    neighborhoods = determine_census_ranking(filename,month)
+    l=[]
+    for neighborhood in neighborhoods:
+        for key in neighborhood.keys():
+            l.append(round(key,10))
+
+    sorted_values = quicksort.quick_sort(l,0,len(l)-1)
+    rv = []
+    for value in sorted_values:
+        for neighborhood in neighborhoods:
+            for key in neighborhood.keys():
+                if value == round(key,10):
+                    rv.append(neighborhood[key])
+    #print(len(sorted_values))                
+    #print(len(rv))
+    return rv
+
 if __name__=="__main__":
     ans = sort(l_elec,"tot")
     ans2 = sort(gas,"tot")
 
     print(ans)
     print(ans2)
+
+    #ans3 = sort_census(l_elec,"tot")
+
+    #print(ans3)
+    #buildings = determine_building_ranking(l_elec,"tot")
+    #ans3 = sort(l_elec)

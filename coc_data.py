@@ -1,5 +1,6 @@
 import csv
-#l = []
+import coords_to_block
+import numpy as np
 
 def read_csv(filename):
     """
@@ -32,8 +33,37 @@ def neighborhood(l):
             d[neighborhood].append({n:row[1:]})    
         n += 1
             #if neighborhood not in d:
+    print(d)
     return d        #    d[neighborhood] = neighborhood[1:]
     #print(d)   
+def building_list(l):
+    """
+    Creates a list of the buildings in the City of Chicago data.
+    They are ordered by as follows:
+    {census_block:{building_type:{building_subtype:list of other information}}}
+    """
+
+    #building_list = []
+    building_dict ={}
+
+    for row in l[1:]:
+        if row[1] != '' and row[2] != '' and row[3] != '':
+            census_block = row[1]
+            #print(census_block)
+            building_type = row[2]
+            building_subtype = row[3]
+            #try:
+            #    duplicate = building_dict[census_block][building_type][building_subtype]
+            #    print(row)
+            #except KeyError:
+            #    pass
+            if census_block not in building_dict:
+                building_dict[census_block] = [{building_type:{building_subtype:[row[0]] + row[4:]}}]
+            else:
+                building_dict[census_block].append({building_type:{building_subtype:[row[0]] + row[4:]}})
+
+    #print(building_dict)
+    return building_dict
 
 def neighborhood_totals(l):
     """
@@ -47,7 +77,81 @@ def neighborhood_totals(l):
             d[row[0]] = row[4:]
     return d               
 
+def find_building(building_dict, address, building_type, building_subtype):
+    """
+    Given an address, building type, and building subtype,
+    the appropriate row from the City of Chicago data is selected.
+    """
 
+    coords = coords_to_block.addr_to_coords(coords_to_block.address_url, address)   
+    census_block = coords_to_block.visit_pages(coords_to_block.url,coords)
+    #if building_subtype == None:
+
+    #    ans = building_dict[str(census_block)][building_type] 
+
+    matches = building_dict[str(census_block)]
+
+    for match in matches:
+        print(match)
+
+        #try:
+        for key in match.keys():
+            print(key)
+            print(key == building_type)
+            if key == building_type:
+                value = match[key]
+                print(value) 
+                for key2 in value.keys():
+                    if key2 == building_subtype:
+                        ans = match[building_type][building_subtype]
+                    else:
+                        break
+        #except KeyError:
+        #    ans = "Not Found"
+   # try:
+
+   #     ans = building_dict[str(census_block)][0][building_type][building_subtype]
+   # except KeyError:
+    # == 'Multi 7+' or KeyError == 'Multi <7' or KeyError == 'Single Family':
+   #     ans = building_dict[str(census_block)][0][building_type] 
+
+    return ans
+
+def census_block_data(l, filename):
+
+    d = {}
+    for row in l[1:]:
+        #print(row[4:16])
+        for i in row[4:16]:
+            if i == '':
+                pass
+            else:    
+                row[4:16] = [float(i) for i in row[4:16]]
+                row[4:16] = list(map(float, row[4:16])) #http://stackoverflow.com/questions/7368789/convert-all-strings-in-a-list-to-int
+                if row[19] == '' or row[18] == '':
+                    pass
+                else:
+                    row[19] = float(row[19])
+                    row[18] = float(row[18])
+                    if row[1] not in d:
+                        if filename == "Energy_Usage_2010_elec.csv":
+                            values = np.array(row[4:16] + [row[19]])
+                        if filename == "Energy_Usage_2010_gas.csv":
+                            values = np.array(row[4:16] + [row[18]]) 
+
+                        #for value in values:
+                            #print(type(value))
+                        d[row[1]] = values
+
+                    else:
+                        if filename == "Energy_Usage_2010_elec.csv":
+                            values = np.array(row[4:16] + [row[19]])
+                        if filename == "Energy_Usage_2010_gas.csv":
+                            values = np.array(row[4:16] + [row[18]])
+
+                        values = values + d[row[1]]
+                        d[row[1]] = values   
+    return d  
 
 
 
