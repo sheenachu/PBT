@@ -70,8 +70,8 @@ def determine_census_ranking(l,month):
         reader = csv.reader(source)
         header = next(reader, None)
         for row in reader:
-            if float(row[13]) != 0:
-                ranking_list[round(float(row[month_dict[month]])/float(row[13]),10)] = row[0]
+            if float(row[14]) != 0:
+                ranking_list[round(float(row[month_dict[month]+1])/float(row[14]),10)] = row[0]
 
     print(len(ranking_list))            
     return ranking_list        

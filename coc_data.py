@@ -121,37 +121,53 @@ def census_block_data(l, filename):
 
     d = {}
     for row in l[1:]:
-        #print(row[4:16])
-        for i in row[4:16]:
-            if i == '':
-                pass
-            else:    
-                row[4:16] = [float(i) for i in row[4:16]]
-                row[4:16] = list(map(float, row[4:16])) #http://stackoverflow.com/questions/7368789/convert-all-strings-in-a-list-to-int
-                if row[19] == '' or row[18] == '':
-                    pass
+        if '' in row:
+            pass
+        else:    
+            #print(row[4:16])
+            #for i in row[4:17]:
+            #    if i == '':
+            #        pass
+            #    else:    
+            row[4:17] = [float(i) for i in row[4:17]]
+            row[4:17] = list(map(float, row[4:17])) #http://stackoverflow.com/questions/7368789/convert-all-strings-in-a-list-to-int
+            if row[19] == '' or row[18] == '':
+                 pass
+            else:
+                row[19] = float(row[19])
+                row[18] = float(row[18])
+                if row[1] not in d:
+                    if filename == "Energy_Usage_2010_elec.csv":
+                        values = np.array(row[4:17] + [row[19]])
+                    if filename == "Energy_Usage_2010_gas.csv":
+                        values = np.array(row[4:17] + [row[18]]) 
+
+                            #for value in values:
+                                #print(type(value))
+                            #print(row[1],[row[4:17]])
+                    d[row[1]] = values
+
                 else:
-                    row[19] = float(row[19])
-                    row[18] = float(row[18])
-                    if row[1] not in d:
-                        if filename == "Energy_Usage_2010_elec.csv":
-                            values = np.array(row[4:16] + [row[19]])
-                        if filename == "Energy_Usage_2010_gas.csv":
-                            values = np.array(row[4:16] + [row[18]]) 
+                    if filename == "Energy_Usage_2010_elec.csv":
+                        values = np.array(row[4:17] + [0])
+                    if filename == "Energy_Usage_2010_gas.csv":
+                        values = np.array(row[4:17] + [0])
 
-                        #for value in values:
-                            #print(type(value))
-                        d[row[1]] = values
-
-                    else:
-                        if filename == "Energy_Usage_2010_elec.csv":
-                            values = np.array(row[4:16] + [row[19]])
-                        if filename == "Energy_Usage_2010_gas.csv":
-                            values = np.array(row[4:16] + [row[18]])
-
-                        values = values + d[row[1]]
-                        d[row[1]] = values   
+                    values = values + d[row[1]]
+                    #print(row[1],values)
+                    d[row[1]] = values 
+                        #print(d[row[1]])  
     return d  
+def census_csv(census_block_dict,filename):
+     with open(filename, "wt") as result:
+        writer = csv.writer(result)
+        writer.writerow(("census","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec","tot","population"))
+        for key in census_block_dict.keys():
+            writer.writerow((key, census_block_dict[key][0], census_block_dict[key][1],
+                census_block_dict[key][2],census_block_dict[key][3],census_block_dict[key][4],
+                census_block_dict[key][5],census_block_dict[key][6],census_block_dict[key][7],
+                census_block_dict[key][8],census_block_dict[key][9],census_block_dict[key][10],
+                census_block_dict[key][11],census_block_dict[key][12],census_block_dict[key][13]))
 
 
 
