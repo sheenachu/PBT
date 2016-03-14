@@ -110,7 +110,7 @@ def find_nearest(address, address_url, url_list):
         print(check_distance)
         if shortest_distance > check_distance:
             shortest_distance = check_distance
-            fuel_station = fuel_list[station][0:2] + fuel_list[station][-2:]
+            fuel_station = fuel_list[station]
 
     return fuel_station + [shortest_distance]        
 
