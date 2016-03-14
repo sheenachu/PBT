@@ -2,8 +2,14 @@ import bs4
 import utility
 import pprint
 import json
+from math import radians, cos, sin, asin, sqrt
+import coords_to_block
 
-#Get alternative fuel stations data
+address_url = "https://maps.googleapis.com/maps/api/geocode/xml?&key=AIzaSyAOnOrIMatS8PArWxa-o2qkZ6Nutzi_a98&address="
+
+#There is a limit to the number of zip codes that can be 
+#inputted at a time. These urls encompass all the zip codes
+#in Chicago.
 
 
 url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&state=IL&zip=60601,60602,60603,60604,60605&limit=100&api_key=78WBQrMES4pXDbTB1W4To32M3R6fRLOO5W6x35n5&format=XML"
@@ -19,11 +25,30 @@ url10 = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&s
 url11 = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&state=IL&zip=60656,60657,60659,60660,60661&limit=100&api_key=78WBQrMES4pXDbTB1W4To32M3R6fRLOO5W6x35n5&format=XML"
 url12 = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&state=IL&zip=60666,60827&limit=100&api_key=78WBQrMES4pXDbTB1W4To32M3R6fRLOO5W6x35n5&format=XML"
 
-solar_url = "https://developer.nrel.gov/api/pvwatts/v4.xml?system_size=7&"
+#solar_url = "https://developer.nrel.gov/api/pvwatts/v4.xml?system_size=7&"
 
 url_list =[url,url2, url3,url4,url5,url6,url7,url8,url9,url10,url11, url12]
 
 def visit_alt_fuel_pages(url_list):
+    """
+    Given a list of urls with different zip codes in Chicago, it
+    returns a dictionary with data on alternative fuel stations
+    in the following format: {n:[station name, address, city,
+    latitude,longitude,alternative fuel type, status (E for Open,
+        P for planned, T for temporarily unavailable)]}
+
+    alternative fuel type options:
+
+    BD      Biodiesel (B20 and above)
+    CNG     Compressed Natural Gas
+    E85     Ethanol (E85)
+    ELEC    Electric
+    HY      Hydrogen
+    LNG     Liquefied Natural Gas
+    LPG     Liquefied Petroleum Gas (Propane)
+
+
+    """
     d = {}
     n = 0
     for url in url_list:
@@ -32,11 +57,6 @@ def visit_alt_fuel_pages(url_list):
 
         text =utility.read_request(request)
         soup = bs4.BeautifulSoup(text, "html5lib")
-
-        #pp = pprint.PrettyPrinter()
-
-        #prettyXML=soup.prettify() 
-        #pp.pprint(prettyXML)
 
         city = soup.find_all('city')
         ft = soup.find_all('fuel-type-code')
@@ -56,5 +76,46 @@ def visit_alt_fuel_pages(url_list):
     print(d)           
     return d          
 
+#The distance function was retrieved from: http://stackoverflow.com/questions/15736995/how-can-i-quickly-estimate-the-distance-between-two-latitude-longitude-points
+def distance(lat1,lon1,lat2,lon2):
+    """
+    Calculates the distance between two latitude and longitude
+    positions.
+    """
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    km = 6367 * c
+    return km
+
+def find_nearest(address, address_url, url_list):
+    """
+    Finds the nearest alternative fuel station based on a
+    given address. Returns a list with information on 
+    the  alternative fuel station and the distance in km
+    between the station and the address.
+    """
+    shortest_distance = 10000
+    fuel_station = ''
+    fuel_list = visit_alt_fuel_pages(url_list)
+    print('got here')
+    coords = coords_to_block.addr_to_coords(address_url, address)
+    for station in fuel_list:
+        #print(fuel_list[station][3])
+        check_distance = distance(float(coords[0]),float(coords[1]),float(fuel_list[station][3]),float(fuel_list[station][4]))
+        print(check_distance)
+        if shortest_distance > check_distance:
+            shortest_distance = check_distance
+            fuel_station = fuel_list[station][0:2] + fuel_list[station][-2:]
+
+    return fuel_station + [shortest_distance]        
+
+
 if __name__ == "__main__":
-    visit_alt_fuel_pages(url_list) 
+    ans = find_nearest("6128 South Ellis Avenue, Chicago, IL",address_url,url_list)
+    print(ans)
+    #visit_alt_fuel_pages(url_list) 
