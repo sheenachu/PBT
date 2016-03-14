@@ -1,14 +1,14 @@
-Device,hours a day,BTU/hour,therms saved a month,Money saved a month
-Range-Surface Unit,0.16666,9000,0.15,0.13
-Range- Oven Unit,0.16666,25000,0.42,0.36
-Broiler Unit,0.16666,20000,0.33,0.29
-Clothes Dryer,0.16666,20000,0.33,0.29
-Shower,0.16666,117930,1.97,1.68
-bathtub,0.16666,9000,0.15,0.13
-Swimming Pool Heater,0.16666,200000,3.33,2.85
-Natural Gas Grill,0.16666,35000,0.58,0.5
-Fireplace,0.16666,60000,1,0.86
-Front Loading Washer - Hot Water,0.16666,8000,0.13,0.11
-Top Loading Washer - Hot Water,0.16666,16000,0.27,0.23
-Front Loading Washer - Warm Water,0.16666,4000,0.07,0.06
-Top Loading Washer - Warm Water,0.16666,8000,0.13,0.11
+Device,hours,BTU/hour,therms,Money saved a month
+Range-Surface Unit,0.25,9000,0.69,0.19
+Range- Oven Unit,0.25,25000,1.91,0.54
+Broiler Unit,0.25,20000,1.53,0.43
+Clothes Dryer,0.25,20000,1.53,0.43
+Shower,0.25,117930,8.99,2.52
+Bathtub,0.25,9000,0.69,0.19
+Swimming Pool Heater,0.25,200000,15.25,4.28
+Natural Gas Grill,0.25,35000,2.67,0.75
+Fireplace,0.25,60000,4.58,1.28
+Front Loading Washer - Hot Water,0.25,8000,0.61,0.17
+Top Loading Washer - Hot Water,0.25,16000,1.22,0.34
+Front Loading Washer - Warm Water,0.25,4000,0.31,0.09
+Top Loading Washer - Warm Water,0.25,8000,0.61,0.17
