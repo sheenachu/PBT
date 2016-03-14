@@ -111,3 +111,5 @@ if __name__=="__main__":
     #ans3 = sort(l_elec)
     ans4 = sort_census(l_elec,"tot")
     print(len(ans4))
+    ans5 = sort_census(gas,"tot")
+    print(len(ans5))

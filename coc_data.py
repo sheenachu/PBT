@@ -139,7 +139,7 @@ def census_block_data(l, filename):
                 if row[1] not in d:
                     if filename == "Energy_Usage_2010_elec.csv":
                         values = np.array(row[4:17] + [row[19]])
-                    if filename == "Energy_Usage_2010_gas.csv":
+                    if filename == "Energy_Usage_2010_therms.csv":
                         values = np.array(row[4:17] + [row[18]]) 
 
                             #for value in values:
@@ -150,7 +150,7 @@ def census_block_data(l, filename):
                 else:
                     if filename == "Energy_Usage_2010_elec.csv":
                         values = np.array(row[4:17] + [0])
-                    if filename == "Energy_Usage_2010_gas.csv":
+                    if filename == "Energy_Usage_2010_therms.csv":
                         values = np.array(row[4:17] + [0])
 
                     values = values + d[row[1]]
