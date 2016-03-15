@@ -12,14 +12,14 @@ import sys
 import csv
 import os
 from operator import and_
-from Improvements import money_saved
-#from meep import money_saved
+#from Improvements import money_saved
+from meep import money_saved
 from functools import reduce
 
 NOPREF_STR = 'No preference'
 RES_DIR = os.path.join(os.path.dirname(__file__), '..', 'res')
 COLUMN_NAMES = dict(
-        device='device',
+        device='Device',
         hours_a_day='Hours Reduced',
 )
 
@@ -58,7 +58,7 @@ DEVICE = _build_dropdown([None] + _load_res_column('device.csv'))
 
 class SearchForm(forms.Form):
 
-    device = forms.ChoiceField(label='device', choices=DEVICE, required=False)
+    device = forms.ChoiceField(label='Device', choices=DEVICE, required=False)
     # days = forms.MultipleChoiceField(label='Days',
     #                                  choices=DAYS,
     #                                  widget=forms.CheckboxSelectMultiple,
@@ -76,17 +76,32 @@ def improve(request):
         form = SearchForm(request.GET)
         # check whether it's valid:
         if form.is_valid():
-
             # Convert form data to an args dictionary for find_courses
             args = {}
+<<<<<<< HEAD
+            data = form.cleaned_data
+            if data['hours_a_day'] != '' and data['device'] != '':
+                hours = data['hours_a_day']
+                #hours = float(hours)
+                args['hours_a_day'] = hours
+                device = data['device']
+=======
             hours = form.cleaned_data['hours_a_day']
             if form.cleaned_data['hours_a_day']:
                 args['hours_a_day'] = hours
             
             device = form.cleaned_data['device']
             if device:
+>>>>>>> ffb3f5d31dac508c686508dbc14d1b83ea071f0f
                 args['device'] = device
+                try:
+                    res = money_saved(args)
+                except Exception as e:
+                    bt = traceback.format_exception(*sys.exc_info()[:3])
 
+<<<<<<< HEAD
+                    res = None
+=======
             try:
                 res = money_saved(args)
             except Exception as e:
@@ -94,6 +109,7 @@ def improve(request):
                 bt = traceback.format_exception(*sys.exc_info()[:3])
 
                 res = None
+>>>>>>> ffb3f5d31dac508c686508dbc14d1b83ea071f0f
     else:
         form = SearchForm()
 
