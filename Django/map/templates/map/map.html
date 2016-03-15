@@ -1,3 +1,4 @@
+<!-- Code modified by Estelle Ostro from -->
 
 {% load staticfiles %}
 
@@ -75,20 +76,24 @@
         <form method="get">
             {% csrf_token %}        	
             {{ form }}
-            <input type="submit" value="Search" />
+            <input id = "getTract" type="submit" value="Search"/>
         </form>
-        <b>Your census block is: </b><br />
+        <b>Your census tract is: </b><br />
         {% for b in block %}
         	{% if forloop.first %}
         		{{ block }}
         	{% endif %}
         {% endfor %}
+        <br>
+        <button onclick="tractMarker({{ coords }})">Show on map?</button>
 	</div>
-	<div id="map" style="width: 75%; height: 100%; float: left;" ></div>
+	<div id="map" style="width: 75%; height: 100%; float: left;" >
+
+	</div>
 
 
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-	<script type="text/javascript" src={% static "community-areas.js" %}></script>
+	<script type="text/javascript" src={% static "census-tracts.js" %}></script>
 
 	<script type="text/javascript">
 
@@ -101,6 +106,16 @@
 			id: 'estelleo.pc8hminh'
 		}).addTo(map);
 
+		function tractPopup(lat, lon) {
+			var popup = L.popup()
+			    .setLatLng([41.88, -87.62])
+			    .setContent("You are here.")
+			    .openOn(map);
+		}
+
+		function tractMarker(coords) {
+			var marker = L.marker(coords).addTo(map);
+		}
 
 		// Create electicity & gas layer groups
 		var electricity = L.layerGroup(); 
@@ -117,7 +132,7 @@
 
 		info.update = function (props) {
 			this._div.innerHTML = "<h4>ChicaGoin' Green</h4>" +  (props ?
-				'<b>' + props.community : 'Hover over a neighborhood');
+				'<b>' + props.namelsad10 : 'Hover over a census tract');
 		};
 
 
@@ -126,13 +141,14 @@
 
 		// Get color depending on neighborhood rating
 		function getColor(d) {
-			return d < 10   ? '#0f1a04' :
-			       d < 20   ? '#253D0B' :
-			       d < 30   ? '#4d7f17' :
-			       d < 40   ? '#6bb120' :
-			       d < 50   ? '#8ae429' :
-			       d < 60   ? '#9afe2e' :
-			       d < 70   ? '#aefe57' :
+			return d < 1       ? '#FFF0F5' :
+				   d < 1000    ? '#0f1a04' :
+			       d < 5000    ? '#253D0B' :
+			       d < 10000   ? '#4d7f17' :
+			       d < 15000   ? '#6bb120' :
+			       d < 20000   ? '#8ae429' :
+			       d < 25000   ? '#9afe2e' :
+			       d < 30000   ? '#aefe57' :
 			                  '#c6fe89';
 		}
 
@@ -193,7 +209,7 @@
 			var layer = e.target;			
 		    popup
 		        .setLatLng(e.latlng)
-		        .setContent('<b>' + layer.feature.properties.community + '</b><br />' + "#" + layer.feature.properties.elec_rank + " Greenest (Electricity)")
+		        .setContent('<b>' + layer.feature.properties.namelsad10 + '</b><br />' + (layer.feature.properties.elec_rank == 0 ? 'N/A' : "#" + layer.feature.properties.elec_rank + " Greenest (Electricity)"))
 		        .openOn(map);
 		}
 
@@ -201,7 +217,7 @@
 			var layer = e.target;			
 		    popup
 		        .setLatLng(e.latlng)
-		        .setContent('<b>' + layer.feature.properties.community + '</b><br />' + "#" + layer.feature.properties.gas_rank + " Greenest (Gas)")
+		        .setContent('<b>' + layer.feature.properties.namelsad10 + '</b><br />' + (layer.feature.properties.elec_rank == 0 ? 'N/A' :"#" + layer.feature.properties.gas_rank + " Greenest (Gas)"))
 		        .openOn(map);
 		}
 
@@ -222,12 +238,13 @@
 		}
 
 
-		geojson = L.geoJson(neighborhoodData, {
+
+		geojson = L.geoJson(censusData, {
 			style: style1,
 			onEachFeature: onEachFeature1
 		});
 
-		geojson2 = L.geoJson(neighborhoodData, {
+		geojson2 = L.geoJson(censusData, {
 			style: style2,
 			onEachFeature: onEachFeature2
 		});
@@ -241,7 +258,7 @@
 		legend.onAdd = function (map) {
 
 			var div = L.DomUtil.create('div', 'info legend'),
-				grades = [1, 10, 20, 30, 40, 50, 60, 70],
+				grades = [1, 1000, 5000, 10000, 15000, 20000, 25000, 30000],
 				labels = [],
 				from, to;
 
@@ -273,6 +290,7 @@
 		var layers = L.control.layers(baseMaps)
 
 		layers.addTo(map);
+
 
 
 	</script>
