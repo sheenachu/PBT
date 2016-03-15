@@ -1,4 +1,13 @@
-<!-- Code modified by Estelle Ostro and Sheena Chu from -->
+<!-- 
+Purpose:  
+    To display a choropleth map of neighborhoods using the JS library 
+    Leaflet (leafletjs.com)
+
+Includes code:
+    Modified from http://leafletjs.com/examples/choropleth.html
+    Modified from http://leafletjs.com/examples/layers-control.html
+    Written by Estelle Ostro
+-->
 
 {% load staticfiles %}
 
@@ -125,6 +134,7 @@
                               '#c6fe89';
         }
 
+        // Electricity style
         function style1(feature) {
             return {
                 weight: 2,
@@ -136,6 +146,7 @@
             };
         }
 
+        // Gas style
         function style2(feature) {
             return {
                 weight: 2,
@@ -147,7 +158,7 @@
             };
         }
 
-
+        // Mouseover actions
         function highlightFeature(e) {
             var layer = e.target;
 
@@ -176,6 +187,7 @@
             map.fitBounds(e.target.getBounds());
         }
 
+        //Create rank popup
         var popup = L.popup();
 
         function eRank(e) {
@@ -194,6 +206,8 @@
                 .openOn(map);
         }
 
+        // What to do for each neighborhood
+        // Electricity
         function onEachFeature1(feature, layer) {
             layer.on({
                 mouseover: highlightFeature,
@@ -202,6 +216,7 @@
             });
         }
 
+        // Gas
         function onEachFeature2(feature, layer) {
             layer.on({
                 mouseover: highlightFeature,
@@ -210,21 +225,23 @@
             });
         }
 
-
+        // Generate electricity layer data
         geojson = L.geoJson(neighborhoodData, {
             style: style1,
             onEachFeature: onEachFeature1
         });
 
+        // Generate gas layer data
         geojson2 = L.geoJson(neighborhoodData, {
             style: style2,
             onEachFeature: onEachFeature2
         });
 
+        // Add data to layers
         electricity.addLayer(geojson)
         gas.addLayer(geojson2)
 
-
+        // Create choropleth legend
         var legend = L.control({position: 'bottomright'});
 
         legend.onAdd = function (map) {
@@ -249,6 +266,7 @@
 
         legend.addTo(map);
 
+        // Add layers to map
         var baseMaps = {
             "Electricity": electricity,
             "Gas": gas

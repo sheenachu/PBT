@@ -1,5 +1,12 @@
 #------------------------------------
-# Code modified from CS122: PA3
+# Purpose:
+#   Creates a Django form which retrieves the amount saved/month for a 
+#   given device and number of hours/day
+#
+# Includes code: 
+#   modified from CS122: PA3
+#   modified from https://docs.djangoproject.com/en/1.9/topics/forms/
+#   written by Sheena Chu & Estelle Ostro
 #------------------------------------
 
 from django.shortcuts import render
@@ -12,7 +19,6 @@ import sys
 import csv
 import os
 from operator import and_
-#from Improvements import money_saved
 from meep import money_saved
 from functools import reduce
 
