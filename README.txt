@@ -6,6 +6,21 @@ by Kevin Bernat, Estelle Ostro, and Sheena Chu
 
 Project set up instructions:
 
+    Modules:
+        django
+        json
+        traceback
+        io
+        sys
+        csv
+        os
+        operator
+        meep (local)
+        functools
+        rankings (local)
+        coc_data (local)
+        coords_to_block (local)
+
 Structure of Code:
 
     Data is collected in csv files and in sqlite3 databases. This data is then organized and analyzed and then used to generated a map of Chicago. This map of Chicago, along with the data generated in sqlite3 databases, are placed in a website which is created with Django.
@@ -71,4 +86,54 @@ Project Files:
         
     Django Files:
     
-    Map Files:        
+    Map Files (Estelle Ostro):
+
+        Python Files:
+
+            rank_neighborhoods.py: Original - Used to add ranking info to 
+            geojson properties.
+
+            map/views.py: Modified - Creates a Django form which retrieves 
+            the census tract of a submitted address.
+
+            search/views.py: (with Sheena Chu) Modified - Creates a Django form which retrieves the amount saved/month for a given device 
+            and number of hours/day
+
+        GEOJSON Files:
+
+            Boundaries - Community Areas (current).geojson: Community area
+            boundaries from City of Chicago website
+
+            Boundaries - Neighborhoods.geojson: Neighborhood boundaries from 
+            City of Chicago website
+
+            censusRanked.geojson: Census tract boundaries with ranking 
+            information added.
+
+            chicagoCensus.geojson: Census tract boundaries from City of 
+            Chicago website.
+
+            ranked_neighborhoods2.geojson: Community Area boundaries with
+            ranking information added.
+
+        HTML Files:
+
+            energymap.html: (Legacy) Modified - used to experiment with mapmaking techniques
+
+            map/census.html: Modified - To display a choropleth map of census 
+            tracts with a census tract lookup by address function using the 
+            JS library Leaflet (leafletjs.com)
+
+            map/map.html: Modified - To display a choropleth map of 
+            neighborhoods using the JS library Leaflet (leafletjs.com)
+
+        JS Files:
+
+            community-areas.js: Stores community area boundaries in a js
+            variable.
+
+            census-tracts.js: Stroes census tract boundaries in a js
+            variable.
+
+            maptest1.js: (Legacy) Stores sample map data in a js variable.
+            Used to experiment with map making techniques.
