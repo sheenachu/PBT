@@ -9,6 +9,7 @@ import statistics
 from random import randint
 import sys
 
+#This is used so that the maximum recursion limit is not reached
 sys.setrecursionlimit(100000)
 
 def median_of_three(first,middle,last):
@@ -86,12 +87,13 @@ def new_partition(l,left_index,right_index,current_left,current_right):
     
     swap(l,left_index, current_right)
     return current_right
-if __name__=="__main__":
 
-    l=[]
-    for element in range(10000):
-        l.append(randint(0,100))
-    print(l)
-    x = quick_sort(l,0,len(l)-1)
-    print(x)
+#if __name__=="__main__":
+
+#    l=[]
+#    for element in range(10000):
+#        l.append(randint(0,100))
+#    print(l)
+#    x = quick_sort(l,0,len(l)-1)
+#    print(x)
 
