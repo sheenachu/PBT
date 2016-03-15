@@ -7,8 +7,7 @@
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
 		<style>
 			#map {
-				width: 800px;
-				height: 500px;
+				height: 100%;
 			}
 
 			.info {
@@ -61,6 +60,18 @@
 			li a:hover {
 			    background-color: #111;
 			}
+
+			.left {
+			    overflow: hidden;
+			    min-height: 100%;
+			}
+
+			.right {
+			    float: right;
+			    width: 250px;
+			    min-height: 50px;
+			    margin-left: 5px;
+			}
 		</style>
 		<style type="text/css"></style>
 <style type="text/css"></style></head>
@@ -72,7 +83,7 @@
           <li style="float:right"><a href="about">About</a></li>
       </ul>
 
-    <div class="frame" style = "width: 25%; float:right">
+    <div class="right" >
         <form method="get">
             {% csrf_token %}        	
             {{ form }}
@@ -87,7 +98,7 @@
         <br>
         <button onclick="tractMarker({{ coords }})">Show on map?</button>
 	</div>
-	<div id="map" style="width: 75%; height: 100%; float: left;" >
+	<div class = "left" id="map" >
 
 	</div>
 

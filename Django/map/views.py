@@ -9,7 +9,11 @@ from django import forms
 import coords_to_block as cbt
 
 
+<<<<<<< HEAD
 def map(request):
+=======
+def census(request):
+>>>>>>> bc6ec80482e17c82dadd8f02aef6497210839747
     context = {}
     if request.method == 'GET':
         # create a form instance and populate it with data from the request:
@@ -29,10 +33,11 @@ def map(request):
         form = SearchForm(initial={'address' : '123 Main St Chicago, IL'})
   
     context['form'] = form
-    return render(request, 'map/map.html', context)
+
+    return render(request, 'map/census.html', context)
 
 class AddressForm(forms.Form):
-    address = forms.CharField(label='Your Address', max_length=200)
+    address = forms.CharField(label='Your Address', max_length=200, required=False)
 
 def calculate_census_block(address):
     url = "http://data.fcc.gov/api/block/2010/find?"
@@ -42,5 +47,5 @@ def calculate_census_block(address):
     rv = cbt.visit_pages(url,coords)
     return coords, rv
 
-def census(request):
-    return render(request, 'map/census.html', context)
+def map(request):
+    return render(request, 'map/map.html', {})
