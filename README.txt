@@ -43,7 +43,7 @@ Project Files:
 
         Sqlite3 Databases:
 
-            coc.db: Data from City of Chicago Website (Energy Usage 2010). This was created by using "Energy_Usage_2010.csv" and using the following command-line prompt commands:
+            coc.db: Legacy Code - Data from City of Chicago Website (Energy Usage 2010). This was created by using "Energy_Usage_2010.csv" and using the following command-line prompt commands:
             .separator "," .import Energy_Usage_2010.csv electricity/therms
 
             improvements.db: Database with two tables. One called standby which has information on standby power for electrical devices. The other is called therms_improvements which has information on gas energy and money saved for certain appliances. This was created by using "standby.csv" and "gas_improvements.csv" and .separator "," .import csv_filename table in the sqlite3 command line.
@@ -60,7 +60,7 @@ Project Files:
 
             nrel_rates.py: Original - Gives the electricity rates in $/kwh.
 
-            quicksort.py: Modified - Sorts a list from least to greatest.
+            quicksort.py: Modified - Sorts a list from least to greatest using a median of three quicksort algorithm.
 
             rankings.py: Original - Ranks the neighborhoods or census block based on energy efficiency.
 

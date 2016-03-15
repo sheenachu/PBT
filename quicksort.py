@@ -1,7 +1,8 @@
-#Quicksorting algorithm to create ranking list
+# Quicksorting algorithm to create ranking list
 #
-#Created by Kevin Bernat 3/8/2016
-#Modified from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
+# Created by Kevin Bernat 3/8/2016
+#
+# Modified from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
 # Median of Three method was implemented independently, using the following
 # as a reference: http://stackoverflow.com/questions/24533359/implementing-the-quick-sort-with-median-of-three
 
@@ -9,6 +10,7 @@ import statistics
 from random import randint
 import sys
 
+#This is used so that the maximum recursion limit is not reached
 sys.setrecursionlimit(100000)
 
 def median_of_three(first,middle,last):
@@ -86,12 +88,13 @@ def new_partition(l,left_index,right_index,current_left,current_right):
     
     swap(l,left_index, current_right)
     return current_right
-if __name__=="__main__":
 
-    l=[]
-    for element in range(10000):
-        l.append(randint(0,100))
-    print(l)
-    x = quick_sort(l,0,len(l)-1)
-    print(x)
+#if __name__=="__main__":
+
+#    l=[]
+#    for element in range(10000):
+#        l.append(randint(0,100))
+#    print(l)
+#    x = quick_sort(l,0,len(l)-1)
+#    print(x)
 
