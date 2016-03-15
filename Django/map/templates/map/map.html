@@ -69,25 +69,44 @@
           <li><a href="map">Neighborhood Map</a></li>
           <li><a href="improve">Improvements</a></li>
           <li style="float:right"><a href="about">About</a></li>
-       </ul>
+      </ul>
 
-	<div id="map" style="width: 100%; height: 100%; position: relative;" ></div>
+    <div class="frame" style = "width: 25%; float:right">
+        <form method="get">
+            {% csrf_token %}        	
+            {{ form }}
+            <input type="submit" value="Search" />
+        </form>
+        <b>Your census block is: </b><br />
+        {% for b in block %}
+        	{% if forloop.first %}
+        		{{ block }}
+        	{% endif %}
+        {% endfor %}
+	</div>
+	<div id="map" style="width: 75%; height: 100%; float: left;" ></div>
+
+
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 	<script type="text/javascript" src={% static "community-areas.js" %}></script>
+
 	<script type="text/javascript">
 
+		// Create map with default location/zoom set to Chicago, IL
 		var map = L.map('map').setView([41.88, -87.62], 10);
 
+		// Create base map
 		var base = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXN0ZWxsZW8iLCJhIjoiY2lsbGtjcnloNXRxZnVoa3Brb3B4Z25pcSJ9.ivjRcsVM9CnL1oWlCC1LSQ', {
 			maxZoom: 18,
 			id: 'estelleo.pc8hminh'
 		}).addTo(map);
 
 
-		var electricity = L.layerGroup(),
+		// Create electicity & gas layer groups
+		var electricity = L.layerGroup(); 
 			gas = L.layerGroup();
 
-		// control that shows state info on hover
+		// Control that shows state info on hover
 		var info = L.control();
 
 		info.onAdd = function (map) {
@@ -101,10 +120,11 @@
 				'<b>' + props.community : 'Hover over a neighborhood');
 		};
 
+
 		info.addTo(map);
 
 
-		// get color depending on population density value
+		// Get color depending on neighborhood rating
 		function getColor(d) {
 			return d < 10   ? '#0f1a04' :
 			       d < 20   ? '#253D0B' :
