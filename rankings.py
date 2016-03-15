@@ -10,6 +10,10 @@ import csv
 
 l_elec = coc_data.read_csv("Energy_Usage_2010_elec.csv")
 gas = coc_data.read_csv("Energy_Usage_2010_therms.csv")
+#census_elec = coc_data.read_csv("census_energy_data_elec.csv")
+#census_gas = coc_data.read_csv("census_energy_data_therms.csv")
+
+
 month_dict = {"jan":0, "feb":1, "mar":2, "apr":3, "may":4,
 "jun":5,"jul":6,"aug":7,"sep":8,"oct":9,"nov":10,"dec":11,"tot":12}
 
@@ -66,7 +70,7 @@ def determine_census_ranking(l,month):
 
     ranking_list = {}
 
-    with open ("census_energy_data.csv", "rt") as source:
+    with open (l, "rt") as source:
         reader = csv.reader(source)
         header = next(reader, None)
         for row in reader:
@@ -109,7 +113,7 @@ if __name__=="__main__":
     #print(ans3)
     #buildings = determine_building_ranking(l_elec,"tot")
     #ans3 = sort(l_elec)
-    ans4 = sort_census(l_elec,"tot")
+    ans4 = sort_census("census_energy_data_elec.csv","tot")
     print(len(ans4))
-    ans5 = sort_census(gas,"tot")
+    ans5 = sort_census("census_energy_data_therms.csv","tot")
     print(len(ans5))
