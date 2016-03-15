@@ -1,7 +1,8 @@
-#Quicksorting algorithm to create ranking list
+# Quicksorting algorithm to create ranking list
 #
-#Created by Kevin Bernat 3/8/2016
-#Modified from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
+# Created by Kevin Bernat 3/8/2016
+#
+# Modified from http://interactivepython.org/runestone/static/pythonds/SortSearch/TheQuickSort.html
 # Median of Three method was implemented independently, using the following
 # as a reference: http://stackoverflow.com/questions/24533359/implementing-the-quick-sort-with-median-of-three
 
