@@ -21,7 +21,7 @@ Project Files:
 
     Note2: Code that was generated but ended up not being used for the final project will be labelled as "Legacy Code". Code that is needed for the final project will not have this label.       
 
-    Data Files:
+    Data Files (Kevin Bernat):
 
         CSV Files:
 
