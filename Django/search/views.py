@@ -23,7 +23,6 @@ COLUMN_NAMES = dict(
         hours_a_day='Hours Reduced',
 )
 
-
 def _valid_result(res):
     (HEADER, RESULTS) = [0,1]
     ok = (isinstance(res, (tuple, list)) and 
@@ -80,19 +79,18 @@ def improve(request):
 
             # Convert form data to an args dictionary for find_courses
             args = {}
+            hours = form.cleaned_data['hours_a_day']
             if form.cleaned_data['hours_a_day']:
-                args['hours_a_day'] = form.cleaned_data['hours_a_day']
+                args['hours_a_day'] = hours
+            
             device = form.cleaned_data['device']
             if device:
                 args['device'] = device
 
-            # if form.cleaned_data['show_args']:
-            #     context['args'] = 'args_to_ui = ' + json.dumps(args, indent=2)
-
             try:
                 res = money_saved(args)
             except Exception as e:
-                # print('Exception caught')
+                print('Exception caught')
                 bt = traceback.format_exception(*sys.exc_info()[:3])
 
                 res = None
@@ -102,15 +100,17 @@ def improve(request):
     # Handle different responses of res
     if res is None:
         context['result'] = None
+
     elif isinstance(res, str):
         context['result'] = None
         context['err'] = res
         result = None
         cols = None
+
     elif not _valid_result(res):
         context['result'] = None
-        context['err'] = ('Return of find_courses has the wrong data type. '
-                         'Should be a tuple of length 4 with one string and three lists.')
+        context['err'] = ('ERROR')
+
     else:
         columns, result = res
 

@@ -1,8 +1,7 @@
 #------------------------------------
 # Includes code: 
 #   modified from CS122: PA3
-#   written by Kevin Bernat
-#   written by Estelle Ostro
+#   written by Kevin Bernat, Estelle Ostro, and Sheena Chu
 #------------------------------------
 
 from django.shortcuts import render
@@ -42,3 +41,6 @@ def calculate_census_block(address):
     coords = cbt.addr_to_coords(address_url, address)   
     rv = cbt.visit_pages(url,coords)
     return coords, rv
+
+def census(request):
+    return render(request, 'map/census.html', context)
