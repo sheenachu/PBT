@@ -8,12 +8,8 @@ from django.shortcuts import render
 from django import forms
 import coords_to_block as cbt
 
-
-<<<<<<< HEAD
-def map(request):
-=======
 def census(request):
->>>>>>> bc6ec80482e17c82dadd8f02aef6497210839747
+
     context = {}
     if request.method == 'GET':
         # create a form instance and populate it with data from the request:
