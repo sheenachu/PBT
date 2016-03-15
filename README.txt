@@ -6,7 +6,7 @@ by Kevin Bernat, Estelle Ostro, and Sheena Chu
 
 Project set up instructions:
     
-    Use the VM image in the flashdrive. Otherwise, this should
+    Use the VM image saved in the flashdrive. Otherwise, this should
     be sufficient:
 
     As described at http://askubuntu.com/questions/666933/how-to-install-python3-django-in-14-04,
