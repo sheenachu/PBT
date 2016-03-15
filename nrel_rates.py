@@ -1,3 +1,8 @@
+# Gets the utility rates for industrial, commerical, and residential
+# buildings.
+#
+# Created by Kevin Bernat
+
 import bs4
 import utility
 import pprint
@@ -34,7 +39,6 @@ def get_utility_rates(rates_url, address, lat, lon):
     d["industrial"] = industrial.text
     d["residential"] = residential.text
 
-    print(d)
     return d
 
 
