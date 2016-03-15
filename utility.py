@@ -1,3 +1,7 @@
+# Handles url requests
+#
+# This file is a DIRECT COPY from pa2
+
 import urllib.parse
 import requests
 import os
