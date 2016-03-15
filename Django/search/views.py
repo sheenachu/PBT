@@ -23,7 +23,6 @@ COLUMN_NAMES = dict(
         hours_a_day='Hours Reduced',
 )
 
-
 def _valid_result(res):
     (HEADER, RESULTS) = [0,1]
     ok = (isinstance(res, (tuple, list)) and 
@@ -79,34 +78,55 @@ def improve(request):
         if form.is_valid():
             # Convert form data to an args dictionary for find_courses
             args = {}
+<<<<<<< HEAD
             data = form.cleaned_data
             if data['hours_a_day'] != '' and data['device'] != '':
                 hours = data['hours_a_day']
                 #hours = float(hours)
                 args['hours_a_day'] = hours
                 device = data['device']
+=======
+            hours = form.cleaned_data['hours_a_day']
+            if form.cleaned_data['hours_a_day']:
+                args['hours_a_day'] = hours
+            
+            device = form.cleaned_data['device']
+            if device:
+>>>>>>> ffb3f5d31dac508c686508dbc14d1b83ea071f0f
                 args['device'] = device
                 try:
                     res = money_saved(args)
                 except Exception as e:
                     bt = traceback.format_exception(*sys.exc_info()[:3])
 
+<<<<<<< HEAD
                     res = None
+=======
+            try:
+                res = money_saved(args)
+            except Exception as e:
+                print('Exception caught')
+                bt = traceback.format_exception(*sys.exc_info()[:3])
+
+                res = None
+>>>>>>> ffb3f5d31dac508c686508dbc14d1b83ea071f0f
     else:
         form = SearchForm()
 
     # Handle different responses of res
     if res is None:
         context['result'] = None
+
     elif isinstance(res, str):
         context['result'] = None
         context['err'] = res
         result = None
         cols = None
+
     elif not _valid_result(res):
         context['result'] = None
-        context['err'] = ('Return of find_courses has the wrong data type. '
-                         'Should be a tuple of length 4 with one string and three lists.')
+        context['err'] = ('ERROR')
+
     else:
         columns, result = res
 
