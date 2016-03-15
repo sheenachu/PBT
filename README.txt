@@ -20,6 +20,18 @@ Project set up instructions:
         rankings (local)
         coc_data (local)
         coords_to_block (local)
+        utility (local)
+        quicksort (local)
+        sqlite3
+        pprint
+        re
+        bs4
+        math
+        urllib.parse
+        requests
+        random
+        statistics
+        numpy
 
 Structure of Code:
 
