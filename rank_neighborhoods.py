@@ -1,5 +1,11 @@
-# Purpose: to add ranking information to neighborhood/census geojson properties
-# Estelle Ostro
+#------------------------------------
+# Purpose: 
+#   To add ranking information to neighborhood/census geojson 
+#   properties
+# Includes code: 
+#   written by Estelle Ostro
+#------------------------------------
+
 
 import json
 import rankings
@@ -11,6 +17,7 @@ l_gas = coc_data.read_csv("Energy_Usage_2010_therms.csv")
 def read_file(filename):
     '''
     Read a geojson file
+        filename: input filename (str)
     '''
     with open(filename, 'r') as f:
         data = json.load(f)
@@ -34,7 +41,8 @@ def census_rank():
 
 def clean_ranks(data):
     '''
-    Clean rank list to work with geojson data format
+    Clean neighborhood rank list to work with geojson data format
+        data: geojson neighborhood data
     '''
     for d in range(len(data)):
         if data[d] == 'Lakeview':
@@ -45,6 +53,10 @@ def clean_ranks(data):
 def update_json(n, rank, name, input_type):
     '''
     Update the geojson dict with given ranking property
+        n: geojson data to be modified
+        rank: ranked neighborhoods/tracts
+        name: geojson property name (str)
+        input_type: 'neighborhood' or 'census'
     '''
     #For troubleshooting:
     json_rejects = [] # not in json listing
@@ -84,6 +96,8 @@ def update_json(n, rank, name, input_type):
 def save_file(filename, data):
     '''
     Save the modified geojson data to a new file
+        filename: output filename (str)
+        data: geojson data
     '''
     with open(filename, 'w') as f:
         json.dump(data, f)
@@ -91,6 +105,9 @@ def save_file(filename, data):
 def process_json(input_f, output_f, input_type):
     '''
     Update a geojson file with ranking info
+        input_f: input filename (str)
+        output_f: output filename (str)
+        input_type: 'neighborhood' or 'census 
     '''
     if input_type == 'neighborhood':
         neighborhoods = read_file(input_f)

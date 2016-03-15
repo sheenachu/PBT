@@ -1,4 +1,14 @@
-<!-- Code modified by Estelle Ostro and Sheena Chu from -->
+<!-- 
+Purpose:  
+	To display a choropleth map of census tracts with a census tract
+	lookup by address function using the JS library Leaflet (leafletjs.com)
+
+Includes code:
+	Modified from http://leafletjs.com/examples/choropleth.html
+	Modified from http://leafletjs.com/examples/layers-control.html
+	Written by Estelle Ostro
+	with some CSS by Sheena Chu
+-->
 
 {% load staticfiles %}
 
@@ -90,17 +100,18 @@
             {{ form }}
             <input id = "getTract" type="submit" value="Search"/>
         </form>
-        <b>Your census tract is: </b><br />
+        <b>Your census tract is: </b>
+        <br />
         {% for b in block %}
         	{% if forloop.first %}
         		{{ block }}
         	{% endif %}
         {% endfor %}
-        <br>
+        <br />
         <button onclick="tractMarker({{ coords }})">Show on map?</button>
 	</div>
-	<div class = "left" id="map" >
 
+	<div class = "left" id="map" >
 	</div>
 
 
@@ -118,13 +129,7 @@
 			id: 'estelleo.pc8hminh'
 		}).addTo(map);
 
-		function tractPopup(lat, lon) {
-			var popup = L.popup()
-			    .setLatLng([41.88, -87.62])
-			    .setContent("You are here.")
-			    .openOn(map);
-		}
-
+		// Create a marker at address
 		function tractMarker(coords) {
 			var marker = L.marker(coords).addTo(map);
 		}
@@ -147,11 +152,10 @@
 				'<b>' + props.namelsad10 : 'Hover over a census tract');
 		};
 
-
 		info.addTo(map);
 
 
-		// Get color depending on neighborhood rating
+		// Get color depending on tract rating
 		function getColor(d) {
 			return d < 1       ? '#FFF0F5' :
 				   d < 1000    ? '#0f1a04' :
@@ -164,6 +168,7 @@
 			                  '#c6fe89';
 		}
 
+		// Electicity Style
 		function style1(feature) {
 			return {
 				weight: 2,
@@ -175,6 +180,7 @@
 			};
 		}
 
+		// Gas Style
 		function style2(feature) {
 			return {
 				weight: 2,
@@ -186,7 +192,7 @@
 			};
 		}
 
-
+		// Mouseover actions
 		function highlightFeature(e) {
 			var layer = e.target;
 
@@ -215,6 +221,7 @@
 			map.fitBounds(e.target.getBounds());
 		}
 
+		//Create rank popup
 		var popup = L.popup();
 
 		function eRank(e) {
@@ -233,6 +240,8 @@
 		        .openOn(map);
 		}
 
+		// What to do for each tract
+		// Electricity
 		function onEachFeature1(feature, layer) {
 			layer.on({
 				mouseover: highlightFeature,
@@ -241,6 +250,7 @@
 			});
 		}
 
+		//Gas
 		function onEachFeature2(feature, layer) {
 			layer.on({
 				mouseover: highlightFeature,
@@ -250,21 +260,23 @@
 		}
 
 
-
+		// Generate electricity layer data
 		geojson = L.geoJson(censusData, {
 			style: style1,
 			onEachFeature: onEachFeature1
 		});
 
+		// Generate gas layer data
 		geojson2 = L.geoJson(censusData, {
 			style: style2,
 			onEachFeature: onEachFeature2
 		});
 
+		//Add data to layers
 		electricity.addLayer(geojson)
 		gas.addLayer(geojson2)
 
-
+		// Create choropleth legend
 		var legend = L.control({position: 'bottomright'});
 
 		legend.onAdd = function (map) {
@@ -289,6 +301,8 @@
 
 		legend.addTo(map);
 
+
+		//Add layers to map
 		var baseMaps = {
 		    "Electricity": electricity,
 		    "Gas": gas
