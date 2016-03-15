@@ -1,3 +1,10 @@
+# Gets information on the alternative fuel stations in Chicago.
+#
+# Created by Kevin Bernat
+#
+# This is Legacy Code: File functions appropriately, but 
+# was not implemented in the final project.
+
 import bs4
 import utility
 import pprint
