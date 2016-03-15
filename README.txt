@@ -109,6 +109,47 @@ Project Files:
 
         
     Django Files:
+
+    Improvements.py (Legacy): Modified - Build search function
+
+    meep.py: Modified - creates output for improvements search
+
+
+    res (Sheena Chu):
+        device.csv - List of devices
+
+
+    Search Files (Sheena Chu):
+
+        Python Files:
+            urls.py: Modified - url paths for this app
+
+            views.py: Modified - Creates a Django form which returns
+                the amount of money saved per month based on device and
+                hours reduced
+
+        Static:
+            background.jpg - Image for website background
+
+            search.css - Modified - css for search app pages
+
+        Templates:
+
+            Search:
+                about.html: Original - Displays the about page
+                base.html: Original - Base html for all html pages 
+                index.html: Original - Displays the home page
+                search.html: Original  - Displays the improvements page
+
+
+
+
+    Website (Sheena Chu):
+        Python Files:
+            settings.py: Modified - settings for Django website
+
+            urls.py: Modified - has url paths for the website
+
     
     Map Files (Estelle Ostro):
 
