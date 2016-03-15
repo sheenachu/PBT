@@ -1,17 +1,13 @@
 #------------------------------------
 # Includes code: 
 #   modified from CS122: PA3
-#   written by Kevin Pernat
+#   written by Kevin Bernat
 #   written by Estelle Ostro
 #------------------------------------
 
 from django.shortcuts import render
 from django import forms
-import bs4
-import utility
-import pprint
-import json
-import re
+import coords_to_block as cbt
 
 
 def map(request):
@@ -24,6 +20,7 @@ def map(request):
             # Convert form data to an args dictionary for find_courses
             block = form.cleaned_data
             rv = calculate_census_block(block['address'])  
+            rv = rv[5:9]
             if rv == None:
                 rv = 'Please submit a valid address.'
             context['block'] = rv
@@ -80,6 +77,6 @@ def calculate_census_block(address):
     url = "http://data.fcc.gov/api/block/2010/find?"
     address_url = "https://maps.googleapis.com/maps/api/geocode/xml?&key=AIzaSyAOnOrIMatS8PArWxa-o2qkZ6Nutzi_a98&address="
 
-    coords = addr_to_coords(address_url, address)   
-    rv = visit_pages(url,coords)
+    coords = cbt.addr_to_coords(address_url, address)   
+    rv = cbt.visit_pages(url,coords)
     return rv
