@@ -20,6 +20,8 @@ def addr_to_coords(address_url, address):
 
     lat = soup.find("lat")
     lon = soup.find("lng")
+    if lat == None or lon == None:
+        return None
     return[lat.text,lon.text]
 
 #def visit_pages(url, lat, lon):
@@ -29,7 +31,8 @@ def visit_pages(url,coords):
     block the coordinates fall under. This will then be used to compare
     the census block data to the photovoltaic data
     """
-
+    if coords == None:
+        return None
     url = url + "latitude=" + coords[0] + "&longitude=" + coords[1]
     request = utility.get_request(url)
 

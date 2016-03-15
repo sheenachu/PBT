@@ -12,16 +12,16 @@ import sys
 import csv
 import os
 from operator import and_
-from Improvements import money_saved
+#from Improvements import money_saved
+from meep import money_saved
 from functools import reduce
 
 NOPREF_STR = 'No preference'
 RES_DIR = os.path.join(os.path.dirname(__file__), '..', 'res')
 COLUMN_NAMES = dict(
-        device='device',
+        device='Device',
         hours_a_day='Hours Reduced',
 )
-
 
 def _valid_result(res):
     (HEADER, RESULTS) = [0,1]
@@ -58,7 +58,7 @@ DEVICE = _build_dropdown([None] + _load_res_column('device.csv'))
 
 class SearchForm(forms.Form):
 
-    device = forms.ChoiceField(label='device', choices=DEVICE, required=False)
+    device = forms.ChoiceField(label='Device', choices=DEVICE, required=False)
     # days = forms.MultipleChoiceField(label='Days',
     #                                  choices=DAYS,
     #                                  widget=forms.CheckboxSelectMultiple,
@@ -76,40 +76,57 @@ def improve(request):
         form = SearchForm(request.GET)
         # check whether it's valid:
         if form.is_valid():
-
             # Convert form data to an args dictionary for find_courses
             args = {}
+<<<<<<< HEAD
+            data = form.cleaned_data
+            if data['hours_a_day'] != '' and data['device'] != '':
+                hours = data['hours_a_day']
+                #hours = float(hours)
+                args['hours_a_day'] = hours
+                device = data['device']
+=======
+            hours = form.cleaned_data['hours_a_day']
             if form.cleaned_data['hours_a_day']:
-                args['hours_a_day'] = form.cleaned_data['hours_a_day']
+                args['hours_a_day'] = hours
+            
             device = form.cleaned_data['device']
             if device:
+>>>>>>> ffb3f5d31dac508c686508dbc14d1b83ea071f0f
                 args['device'] = device
+                try:
+                    res = money_saved(args)
+                except Exception as e:
+                    bt = traceback.format_exception(*sys.exc_info()[:3])
 
-            # if form.cleaned_data['show_args']:
-            #     context['args'] = 'args_to_ui = ' + json.dumps(args, indent=2)
-
+<<<<<<< HEAD
+                    res = None
+=======
             try:
                 res = money_saved(args)
             except Exception as e:
-                # print('Exception caught')
+                print('Exception caught')
                 bt = traceback.format_exception(*sys.exc_info()[:3])
 
                 res = None
+>>>>>>> ffb3f5d31dac508c686508dbc14d1b83ea071f0f
     else:
         form = SearchForm()
 
     # Handle different responses of res
     if res is None:
         context['result'] = None
+
     elif isinstance(res, str):
         context['result'] = None
         context['err'] = res
         result = None
         cols = None
+
     elif not _valid_result(res):
         context['result'] = None
-        context['err'] = ('Return of find_courses has the wrong data type. '
-                         'Should be a tuple of length 4 with one string and three lists.')
+        context['err'] = ('ERROR')
+
     else:
         columns, result = res
 
