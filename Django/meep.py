@@ -66,8 +66,8 @@ def money_saved(args_from_ui):
     '''
     rv = []
     attr = ['money_saved_per_month']
-
-    btu = int(db_query(DATABASE_FILENAME, args_from_ui)[0][0])
+    print(db_query(DATABASE_FILENAME, args_from_ui))
+    btu = db_query(DATABASE_FILENAME, args_from_ui)[0][0]
 
     hours = query['hours_a_day']
 
@@ -104,5 +104,5 @@ def clean_header(s):
     return s
 
 # ########### some sample inputs #################
-query = {"device": "Fireplace",
-             "hours_a_day": 0.25}
+query = {"device": "Range-Oven Unit",
+             "hours_a_day": 0.5}
