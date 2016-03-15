@@ -1,0 +1,298 @@
+<!-- Code modified by Estelle Ostro from -->
+
+{% load staticfiles %}
+
+<html>
+<head>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+		<style>
+			#map {
+				width: 800px;
+				height: 500px;
+			}
+
+			.info {
+				padding: 6px 8px;
+				font: 14px/16px Arial, Helvetica, sans-serif;
+				background: white;
+				background: rgba(255,255,255,0.8);
+				box-shadow: 0 0 15px rgba(0,0,0,0.2);
+				border-radius: 5px;
+			}
+			.info h4 {
+				margin: 0 0 5px;
+				color: #777;
+			}
+
+			.legend {
+				text-align: left;
+				line-height: 18px;
+				color: #555;
+			}
+			.legend i {
+				width: 18px;
+				height: 18px;
+				float: left;
+				margin-right: 8px;
+				opacity: 0.7;
+			}
+
+			ul {
+			    list-style-type: none;
+			    margin: 0;
+			    padding: 0;
+			    overflow: hidden;
+			    background-color: #333;
+			}
+
+			li {
+			    float: left;
+			}
+
+			li a {
+			    display: block;
+			    color: white;
+			    text-align: center;
+			    padding: 14px 16px;
+			    text-decoration: none;
+			}
+
+			/* Change the link color to #111 (black) on hover */
+			li a:hover {
+			    background-color: #111;
+			}
+		</style>
+		<style type="text/css"></style>
+<style type="text/css"></style></head>
+<body>
+	<ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="map">Neighborhood Map</a></li>
+          <li><a href="improve">Improvements</a></li>
+          <li style="float:right"><a href="about">About</a></li>
+      </ul>
+
+    <div class="frame" style = "width: 25%; float:right">
+        <form method="get">
+            {% csrf_token %}        	
+            {{ form }}
+            <input id = "getTract" type="submit" value="Search"/>
+        </form>
+        <b>Your census tract is: </b><br />
+        {% for b in block %}
+        	{% if forloop.first %}
+        		{{ block }}
+        	{% endif %}
+        {% endfor %}
+        <br>
+        <button onclick="tractMarker({{ coords }})">Show on map?</button>
+	</div>
+	<div id="map" style="width: 75%; height: 100%; float: left;" >
+
+	</div>
+
+
+	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+	<script type="text/javascript" src={% static "census-tracts.js" %}></script>
+
+	<script type="text/javascript">
+
+		// Create map with default location/zoom set to Chicago, IL
+		var map = L.map('map').setView([41.88, -87.62], 10);
+
+		// Create base map
+		var base = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXN0ZWxsZW8iLCJhIjoiY2lsbGtjcnloNXRxZnVoa3Brb3B4Z25pcSJ9.ivjRcsVM9CnL1oWlCC1LSQ', {
+			maxZoom: 18,
+			id: 'estelleo.pc8hminh'
+		}).addTo(map);
+
+		function tractPopup(lat, lon) {
+			var popup = L.popup()
+			    .setLatLng([41.88, -87.62])
+			    .setContent("You are here.")
+			    .openOn(map);
+		}
+
+		function tractMarker(coords) {
+			var marker = L.marker(coords).addTo(map);
+		}
+
+		// Create electicity & gas layer groups
+		var electricity = L.layerGroup(); 
+			gas = L.layerGroup();
+
+		// Control that shows state info on hover
+		var info = L.control();
+
+		info.onAdd = function (map) {
+			this._div = L.DomUtil.create('div', 'info');
+			this.update();
+			return this._div;
+		};
+
+		info.update = function (props) {
+			this._div.innerHTML = "<h4>ChicaGoin' Green</h4>" +  (props ?
+				'<b>' + props.namelsad10 : 'Hover over a census tract');
+		};
+
+
+		info.addTo(map);
+
+
+		// Get color depending on neighborhood rating
+		function getColor(d) {
+			return d < 1       ? '#FFF0F5' :
+				   d < 1000    ? '#0f1a04' :
+			       d < 5000    ? '#253D0B' :
+			       d < 10000   ? '#4d7f17' :
+			       d < 15000   ? '#6bb120' :
+			       d < 20000   ? '#8ae429' :
+			       d < 25000   ? '#9afe2e' :
+			       d < 30000   ? '#aefe57' :
+			                  '#c6fe89';
+		}
+
+		function style1(feature) {
+			return {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: getColor(feature.properties.elec_rank)
+			};
+		}
+
+		function style2(feature) {
+			return {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: getColor(feature.properties.gas_rank)
+			};
+		}
+
+
+		function highlightFeature(e) {
+			var layer = e.target;
+
+			layer.setStyle({
+				weight: 5,
+				color: '#666',
+				dashArray: '',
+				fillOpacity: 0.7
+			});
+
+			if (!L.Browser.ie && !L.Browser.opera) {
+				layer.bringToFront();
+			}
+
+			info.update(layer.feature.properties);
+		}
+
+		var geojson;
+
+		function resetHighlight(e) {
+			geojson.resetStyle(e.target);
+			info.update();
+		}
+
+		function zoomToFeature(e) {
+			map.fitBounds(e.target.getBounds());
+		}
+
+		var popup = L.popup();
+
+		function eRank(e) {
+			var layer = e.target;			
+		    popup
+		        .setLatLng(e.latlng)
+		        .setContent('<b>' + layer.feature.properties.namelsad10 + '</b><br />' + (layer.feature.properties.elec_rank == 0 ? 'N/A' : "#" + layer.feature.properties.elec_rank + " Greenest (Electricity)"))
+		        .openOn(map);
+		}
+
+		function gRank(e) {
+			var layer = e.target;			
+		    popup
+		        .setLatLng(e.latlng)
+		        .setContent('<b>' + layer.feature.properties.namelsad10 + '</b><br />' + (layer.feature.properties.elec_rank == 0 ? 'N/A' :"#" + layer.feature.properties.gas_rank + " Greenest (Gas)"))
+		        .openOn(map);
+		}
+
+		function onEachFeature1(feature, layer) {
+			layer.on({
+				mouseover: highlightFeature,
+				mouseout: resetHighlight,
+				click: eRank
+			});
+		}
+
+		function onEachFeature2(feature, layer) {
+			layer.on({
+				mouseover: highlightFeature,
+				mouseout: resetHighlight,
+				click: gRank
+			});
+		}
+
+
+
+		geojson = L.geoJson(censusData, {
+			style: style1,
+			onEachFeature: onEachFeature1
+		});
+
+		geojson2 = L.geoJson(censusData, {
+			style: style2,
+			onEachFeature: onEachFeature2
+		});
+
+		electricity.addLayer(geojson)
+		gas.addLayer(geojson2)
+
+
+		var legend = L.control({position: 'bottomright'});
+
+		legend.onAdd = function (map) {
+
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = [1, 1000, 5000, 10000, 15000, 20000, 25000, 30000],
+				labels = [],
+				from, to;
+
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
+
+				labels.push(
+					'<i style="background:' + getColor(from + 1) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
+
+			div.innerHTML = labels.join('<br>');
+			return div;
+		};
+
+		legend.addTo(map);
+
+		var baseMaps = {
+		    "Electricity": electricity,
+		    "Gas": gas
+		};
+
+		var overlayMaps = {
+		    "Electricity": electricity,
+		    "Gas": gas
+		};
+		
+		var layers = L.control.layers(baseMaps)
+
+		layers.addTo(map);
+
+
+
+	</script>
+</body>
+</html>
