@@ -196,8 +196,7 @@ table.courses tr th {
 }
 
 table.courses tr:nth-child(even) {
-    background: #eee;
-}
+    background: transparent
 
 ul.errorlist {
     margin: 0px;
