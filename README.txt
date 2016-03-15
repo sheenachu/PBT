@@ -114,7 +114,7 @@ Project Files:
 
             quicksort.py: Modified - Sorts a list from least to greatest using a median of three quicksort algorithm.
 
-            rankings.py: Original - Ranks the neighborhoods or census block based on energy efficiency.
+            rankings.py: Original - Ranks the neighborhoods or census block based on energy efficiency for any month or for the total for that year. Only the totals were implemented into the final project.
 
             standby_crawler.py: Original - Crawls the Standby Power website. This is the website:
             http://standby.lbl.gov/summary-table.html
