@@ -7,7 +7,9 @@
 
 import statistics
 from random import randint
+import sys
 
+sys.setrecursionlimit(100000)
 
 def median_of_three(first,middle,last):
     """
@@ -54,7 +56,7 @@ def new_partition(l,left_index,right_index,current_left,current_right):
     """
     #start off with the pivot as the first element of the list
     pivot = l[left_index]   
-
+    swapping = True
     if current_left >= current_right:
         #get new pivot
         middle = int(len(l[left_index:right_index])/2)
@@ -65,26 +67,29 @@ def new_partition(l,left_index,right_index,current_left,current_right):
 
     current_left = left_index
     current_right = right_index
+    while swapping:
 
-    while current_left <= current_right and l[current_left] <= pivot: 
-        current_left += 1
+        while current_left <= current_right and l[current_left] <= pivot: 
+            current_left += 1
 
-    while l[current_right] >= pivot and current_right >= current_left:
-        current_right -= 1
+        while l[current_right] >= pivot and current_right >= current_left:
+            current_right -= 1
 
-    if current_right < current_left: #split point found!
-        swap(l,left_index, current_right)
-        return current_right
+        if current_right < current_left: #split point found!
+            swapping = False
+            
 
-    else:
-        # perform swap with left and right
-        swap(l,current_left, current_right)
-        return new_partition(l, left_index, right_index, current_left+1,current_right-1)
-
+        else:
+            # perform swap with left and right
+            swap(l,current_left, current_right)
+            return new_partition(l, left_index, right_index, current_left+1,current_right-1)
+    
+    swap(l,left_index, current_right)
+    return current_right
 if __name__=="__main__":
 
     l=[]
-    for element in range(10):
+    for element in range(10000):
         l.append(randint(0,100))
     print(l)
     x = quick_sort(l,0,len(l)-1)
