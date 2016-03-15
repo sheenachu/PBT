@@ -6,6 +6,11 @@ by Kevin Bernat, Estelle Ostro, and Sheena Chu
 
 Project set up instructions:
     
+    Use the VM image in the flashdrive. Otherwise, this should
+    be sufficient:
+
+    As described at http://askubuntu.com/questions/666933/how-to-install-python3-django-in-14-04,
+
     Install pip package manager:
     sudo apt-get update
 
@@ -42,6 +47,15 @@ Project set up instructions:
         statistics
         numpy
 
+    How to use the Website:
+
+        In the Django folder, run python3 manage.py runserver in the terminal. Click on the link. This will open the website in Firefox. You will begin at the homepage. Using the navigation bar, you can go between a Neighborhood Map page,
+        a Census Map page, and an About page.
+
+        In the Neighborhood and Census Map pages, select a layer using the button in the upper right-hand corner of the map (electricity or gas) in order to visualize the neighborhoods/census blocks on the map. Hovering of a neighborhood reveals the name of the neighborhoood. Clicking on the neighborhood reveals the name of the neighborhood as well as its ranking when compared to the other neighborhoods. This can likewise be done in the Census Map page. On the Census Map page, you can input an appropriate address and return the census tract. You can even click on the "show on map?" button to get a pin show up on the map to see under which census block the address falls under.
+
+        On the Improvements page, you can choose which device you would like to use less. The number of hours per day in which you would like to not use the device can be inputted. This returns the amount of money that would be saved per month.
+
 Structure of Code:
 
     Data is collected in csv files and in sqlite3 databases. This data is then organized and analyzed and then used to generated a map of Chicago. This map of Chicago, along with the data generated in sqlite3 databases, are placed in a website which is created with Django.
@@ -75,7 +89,9 @@ Project Files:
 
             standby.csv: Data on the standby power that certain electrical appliances use under different conditions.
 
-            gas_improvements.csv: Data on the energy and money saved if certain devices are used less.
+            gas_improvements.csv: Data on the energy and money saved if certain devices are used less. The information 
+            was gotten from the following website: 
+            http://www.peoplesgasdelivery.com/home/gas_calculator.aspx
 
         Sqlite3 Databases:
 
@@ -100,7 +116,8 @@ Project Files:
 
             rankings.py: Original - Ranks the neighborhoods or census block based on energy efficiency.
 
-            standby_crawler.py: Original - Crawls the Standby Power website
+            standby_crawler.py: Original - Crawls the Standby Power website. This is the website:
+            http://standby.lbl.gov/summary-table.html
 
             utility.py: Direct Copy -Used to get and read requests from urls.
 
