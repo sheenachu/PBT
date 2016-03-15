@@ -39,7 +39,12 @@ def neighborhood(l):
   
 def building_list(l):
     """
-    LEGACY CODE -- Not used in project
+    LEGACY CODE -- Not used in project. The purpose would be that
+    an individual would be able to find their energy usage by
+    inputting their census_block (address), building type, and
+    building subtype. However, there were a lot of innaccuracies since
+    census blocks apply to multiple buildings in many cases. It was
+    therefore decided to modify the data by census blocks.
 
     Creates a list of the buildings in the City of Chicago data.
     They are ordered by as follows:
@@ -70,13 +75,18 @@ def neighborhood_totals(l):
     """
     d = {}
     for row in l[1:]:
+        #Neighborhoods all have these rows empty since they
+        #correspond to individual building information.
         if row[1] == '' and row[2] == '' and row[3] == '':
             d[row[0]] = row[4:]
     return d               
 
 def find_building(building_dict, address, building_type, building_subtype):
     """
-    LEGACY CODE -- Not used in final project
+    LEGACY CODE -- Not used in final project. Some complications 
+    emerged since it was difficult to find a single building using
+    the above search. This code is incomplete.
+
     Given an address, building type, and building subtype,
     the appropriate row from the City of Chicago data is selected.
     """
