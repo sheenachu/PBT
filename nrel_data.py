@@ -25,8 +25,6 @@ url10 = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&s
 url11 = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&state=IL&zip=60656,60657,60659,60660,60661&limit=100&api_key=78WBQrMES4pXDbTB1W4To32M3R6fRLOO5W6x35n5&format=XML"
 url12 = "https://developer.nrel.gov/api/alt-fuel-stations/v1.xml?fuel_type=all&state=IL&zip=60666,60827&limit=100&api_key=78WBQrMES4pXDbTB1W4To32M3R6fRLOO5W6x35n5&format=XML"
 
-#solar_url = "https://developer.nrel.gov/api/pvwatts/v4.xml?system_size=7&"
-
 url_list =[url,url2, url3,url4,url5,url6,url7,url8,url9,url10,url11, url12]
 
 def visit_alt_fuel_pages(url_list):
@@ -73,10 +71,10 @@ def visit_alt_fuel_pages(url_list):
 
             n+= 1 
 
-    print(d)           
     return d          
 
 #The distance function was retrieved from: http://stackoverflow.com/questions/15736995/how-can-i-quickly-estimate-the-distance-between-two-latitude-longitude-points
+#This function is a DIRECT COPY
 def distance(lat1,lon1,lat2,lon2):
     """
     Calculates the distance between two latitude and longitude
@@ -102,20 +100,19 @@ def find_nearest(address, address_url, url_list):
     shortest_distance = 10000
     fuel_station = ''
     fuel_list = visit_alt_fuel_pages(url_list)
-    print('got here')
+
     coords = coords_to_block.addr_to_coords(address_url, address)
     for station in fuel_list:
-        #print(fuel_list[station][3])
+
         check_distance = distance(float(coords[0]),float(coords[1]),float(fuel_list[station][3]),float(fuel_list[station][4]))
-        print(check_distance)
+
         if shortest_distance > check_distance:
             shortest_distance = check_distance
             fuel_station = fuel_list[station]
 
     return fuel_station + [shortest_distance]        
 
-
+#testing purposes
 if __name__ == "__main__":
     ans = find_nearest("6128 South Ellis Avenue, Chicago, IL",address_url,url_list)
     print(ans)
-    #visit_alt_fuel_pages(url_list) 
